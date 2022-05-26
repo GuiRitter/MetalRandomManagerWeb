@@ -2,6 +2,7 @@
   "name": "metal_random_manager",
   "version": "1.0.0",
   "private": true,
+  "homepage": "metal_random_manager/",
   "dependencies": {
     "@testing-library/jest-dom": "^5.11.10",
     "@testing-library/react": "^11.2.6",
