@@ -1,10 +1,10 @@
 import React, { useEffect, useRef } from 'react';
 import { useDispatch } from 'react-redux';
 
-import { navigate, signOut } from './flux/action/index';
-import * as state from './constant/state';
+import { navigate, signOut } from '../flux/action/index';
+import * as state from '../constant/state';
 
-import { buildCell, buildRow, buildTable } from './util/html';
+import { buildCell, buildRow, buildTable } from '../util/html';
 
 function componentDidMount(props) {
 }

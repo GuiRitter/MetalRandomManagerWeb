@@ -1,11 +1,11 @@
 import React, { useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import * as state from './constant/state';
+import * as state from '../constant/state';
 
-import { restoreFromLocalStorage } from './flux/action/index';
+import { restoreFromLocalStorage } from '../flux/action/index';
 
-import { getLog } from './util/log';
+import { getLog } from '../util/log';
 
 import './App.css';
 

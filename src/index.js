@@ -9,7 +9,7 @@ import './index.css';
 import reducer from './flux/reducer';
 import { ENABLE_ABORT_REQUEST } from './flux/type';
 
-import App from './App';
+import App from './ui/App';
 
 const store = configureStore({
 	reducer: { reducer },

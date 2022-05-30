@@ -1,9 +1,9 @@
 import React from 'react';
 import { useDispatch/*, useSelector*/ } from 'react-redux';
 
-import { abortRequest } from './flux/action/axios';
+import { abortRequest } from '../flux/action/axios';
 
-import { buildCell, buildRow, buildTable } from './util/html';
+import { buildCell, buildRow, buildTable } from '../util/html';
 
 function Loading(props) {
 

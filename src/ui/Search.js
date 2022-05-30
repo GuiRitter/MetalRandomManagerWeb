@@ -1,12 +1,12 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { getDone, navigate } from './flux/action/index';
-import * as state from './constant/state';
+import { getDone, navigate } from '../flux/action/index';
+import * as state from '../constant/state';
 
-import { buildCell, buildRow, buildTable } from './util/html';
+import { buildCell, buildRow, buildTable } from '../util/html';
 
-import { getLog } from './util/log';
+import { getLog } from '../util/log';
 
 const log = getLog('Search.');
 
