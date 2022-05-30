@@ -9,18 +9,6 @@ function Loading(props) {
 
 	const dispatch = useDispatch();
 
-	// const abortSignal = useSelector(state => ((state || {}).reducer || {}).abortSignal);
-
-	// let rowList = [buildRow('header', buildCell('header', <h1>Loading</h1>))];
-
-	// if (abortSignal) {
-	// 	rowList = rowList.concat(buildRow('button', buildCell('button', <button
-	// 		onClick={() => dispatch(abortRequest())}
-	// 		type='submit'
-	// 	>Cancel</button>)));
-	// }
-
-	// return buildTable(rowList);
 	return buildTable(
 		buildRow('header', buildCell('header', <h1>Loading</h1>)),
 		buildRow('button', buildCell('button', <button
