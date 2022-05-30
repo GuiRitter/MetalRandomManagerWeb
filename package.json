@@ -1,9 +1,10 @@
 {
   "name": "metal_random_manager",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "private": true,
   "homepage": "metal_random_manager/",
   "dependencies": {
+    "@reduxjs/toolkit": "^1.8.2",
     "@testing-library/jest-dom": "^5.11.10",
     "@testing-library/react": "^11.2.6",
     "@testing-library/user-event": "^12.8.3",

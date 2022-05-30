@@ -10,14 +10,14 @@ const log = getLog('flux.reducer.');
 
 const initialState =
 {
-	abortController: null,
+	abortMethod: null,
 	data: null,
 	isLoading: false,
 	state: state.MENU,
 	token: null
 };
 
-const reducer = (currentState = initialState, action) => {
+const reducer = (currentState = initialState, action) => { // TODO https://redux.js.org/introduction/why-rtk-is-redux-today
 	log('reducer', { currentState, action });
 
 	let nextState = Object.assign({}, currentState);
@@ -45,7 +45,7 @@ const reducer = (currentState = initialState, action) => {
 		case type.ENABLE_ABORT_REQUEST:
 			return updateLocalStorage({
 				...nextState,
-				abortController: nextState.isLoading ? action.abortController : null
+				abortMethod: nextState.isLoading ? action.abortMethod : null
 			});
 
 		case type.GET_DONE:

@@ -1,31 +1,25 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { configureStore } from '@reduxjs/toolkit'
 import { Provider } from 'react-redux';
-import { createStore, applyMiddleware, compose, combineReducers } from 'redux'; // TODO
-import thunk from 'redux-thunk';
-import './index.css';
-import App from './App';
 import reportWebVitals from './reportWebVitals';
 
+import './index.css';
+
 import reducer from './flux/reducer';
+import { ENABLE_ABORT_REQUEST } from './flux/type';
 
-/**
- * https://github.com/zalmoxisus/redux-devtools-extension
- */
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+import App from './App';
 
-const createRootReducer = () => combineReducers({
-	reducer,
+const store = configureStore({
+	reducer: { reducer },
+	middleware: getDefaultMiddleware => getDefaultMiddleware({
+		serializableCheck: {
+			ignoredActions: [ENABLE_ABORT_REQUEST],
+			ignoredPaths: ['reducer.abortMethod'],
+		}
+	})
 });
-
-const store = createStore(
-	createRootReducer(), // root reducer with router state
-	composeEnhancers(
-		applyMiddleware(
-			thunk
-		)
-	)
-);
 
 ReactDOM.render(
 	<Provider store={store}><React.StrictMode><App /></React.StrictMode></Provider>,

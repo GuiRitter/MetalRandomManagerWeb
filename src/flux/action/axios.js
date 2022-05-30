@@ -15,8 +15,7 @@ const axiosInstance = axios.create({ headers: { 'Access-Control-Allow-Origin': '
 
 export const abortRequest = () => (dispatch, getState) => {
 	log('abortRequest', { state: getState() });
-	debugger;
-	((getState().reducer.abortController || {}).abort || (() => { }))();
+	(getState().reducer.abortMethod || (() => {}))();
 	dispatch({
 		type: type.ABORT_REQUEST
 	});
@@ -25,6 +24,7 @@ export const abortRequest = () => (dispatch, getState) => {
 const getAxiosWithAbortController = (method, url, data, config, getState) => {
 	log('getAxiosWithAbortController', { method, url, data, config });
 	let abortController = new AbortController();
+	let abortMethod = abortController.abort.bind(abortController);
 	config = {
 		signal: abortController.signal,
 		...config
@@ -37,7 +37,7 @@ const getAxiosWithAbortController = (method, url, data, config, getState) => {
 		};
 	}
 	let result = {
-		abortController: abortController
+		abortMethod
 	};
 	switch (method) {
 		case httpMethod.GET:
@@ -63,11 +63,11 @@ export const get = (url, config, thenFunction, catchFunction, finallyFunction) =
 	dispatch(requestAndShowLoading(getAxiosWithAbortController(httpMethod.GET, url, null, config, getState), thenFunction, catchFunction, finallyFunction));
 };
 
-const enableAbortRequest = abortController => {
-	log('enableAbortRequest', { abortController: !!abortController });
+const enableAbortRequest = abortMethod => {
+	log('enableAbortRequest', { abortMethod: !!abortMethod });
 	return ({
 		type: type.ENABLE_ABORT_REQUEST,
-		abortController
+		abortMethod
 	});
 };
 
@@ -86,7 +86,9 @@ const request = (axiosAndController, thenFunction, catchFunction, finallyFunctio
 				alert(reason.response.data.error);
 			} else if (reason && reason.response && reason.response.data && reason.response.data.error) {
 				alert(reason.response.data.error);
-			} else if (reason && (reason.code !== CANCELED_ERROR)) {
+			} else if (reason && (reason.code === CANCELED_ERROR)) {
+				// do nothing
+			} else if (reason) {
 				alert(reason.message);
 			} else {
 				alert('unknown error');
@@ -101,7 +103,7 @@ const request = (axiosAndController, thenFunction, catchFunction, finallyFunctio
 			}
 			dispatch(showLoading(false))
 		});
-	dispatch(enableAbortRequest(axiosAndController.abortController));
+	dispatch(enableAbortRequest(axiosAndController.abortMethod));
 };
 
 const requestAndShowLoading = (axiosAndController, thenFunction, catchFunction, finallyFunction) => dispatch => {
