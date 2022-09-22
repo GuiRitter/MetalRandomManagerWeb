@@ -26,6 +26,26 @@ export const getLastPage = () => (dispatch, getState) => {
 	dispatch(getPage(pageAmount - 1));
 };
 
+export const getNextPage = () => (dispatch, getState) => {
+	const { count, pageNumber } = getState().reducer.data;
+	const pageAmount = getPageAmount(count, PAGE_SIZE);
+	log('getNextPage', { count, pageAmount });
+	if ((pageNumber + 1) > (pageAmount - 1)) {
+		return;
+	}
+	dispatch(getPage(pageNumber + 1));
+};
+
+export const getPreviousPage = () => (dispatch, getState) => {
+	const { count, pageNumber } = getState().reducer.data;
+	const pageAmount = getPageAmount(count, PAGE_SIZE);
+	log('getPreviousPage', { count, pageAmount });
+	if ((pageNumber - 1) < 0) {
+		return;
+	}
+	dispatch(getPage(pageNumber - 1));
+};
+
 export const getPage = pageNumber => (dispatch, getState) => {
 	const { entity, pageSize } = getState().reducer.data;
 	log('getPage', { entity, pageNumber, pageSize });

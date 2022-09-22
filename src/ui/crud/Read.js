@@ -5,7 +5,7 @@ import * as state from '../../constant/state';
 import { PAGE_SIZE } from '../../constant/system';
 
 import { navigate } from '../../flux/action/index';
-import { getCurrentPage, getFirstPage, getLastPage, setPageNumber } from '../../flux/action/data';
+import { getCurrentPage, getFirstPage, getLastPage, getNextPage, getPreviousPage, setPageNumber } from '../../flux/action/data';
 
 import { getPageAmount } from '../../util/data';
 import { buildCell, buildRow, buildTable } from '../../util/html';
@@ -121,7 +121,7 @@ function Read(props) {
 			>{'|<'}</button>),
 
 			buildCell('previous', <button
-				onClick={() => alert('TO DO')}
+			onClick={() => dispatch(getPreviousPage())}
 				ref={ref => { if (ref) { setPreviousField(ref); } }}
 				type='submit'
 			>{'<'}</button>),
@@ -135,7 +135,7 @@ function Read(props) {
 			),
 
 			buildCell('next', <button
-				onClick={() => alert('TO DO')}
+			onClick={() => dispatch(getNextPage())}
 				ref={ref => { if (ref) { setNextField(ref); } }}
 				type='submit'
 			>{'>'}</button>),
