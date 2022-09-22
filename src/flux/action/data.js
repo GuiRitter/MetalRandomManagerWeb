@@ -8,6 +8,16 @@ import { getLog } from '../../util/log';
 
 const log = getLog('flux.action.data.');
 
+export const getCurrentPage = () => (dispatch, getState) => {
+	log('getCurrentPage');
+	dispatch(getPage(((getState().reducer || {}).data || {}).pageNumber));
+};
+
+export const getFirstPage = () => (dispatch, getState) => {
+	log('getFirstPage');
+	dispatch(getPage(0));
+};
+
 export const getPage = pageNumber => (dispatch, getState) => {
 	const { entity, pageSize } = getState().reducer.data;
 	log('getPage', { entity, pageNumber, pageSize });
