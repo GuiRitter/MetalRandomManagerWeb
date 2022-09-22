@@ -15,14 +15,30 @@ import { getLog } from '../../util/log';
 
 const log = getLog('crud.Read.');
 
-function componentDidMount(props, dispatch, pageField, page) {
+function componentDidMount(props, dispatch, pageField, page, firstField, previousField, nextField, lastField, pageAmount) {
 	if (pageField && (pageField.value !== (page + 1))) {
 		pageField.value = page + 1;
 	}
+	if (page === 0) {
+		if (previousField) {
+			previousField.disabled = 'disabled';
+		}
+		if (firstField) {
+			firstField.disabled = 'disabled';
+		}
+	}
+	if (page === (pageAmount - 1)) {
+		if (nextField) {
+			nextField.disabled = 'disabled';
+		}
+		if (lastField) {
+			lastField.disabled = 'disabled';
+		}
+	}
 }
 
-function componentDidUpdate(props, prevProps, dispatch, pageField, page) {
-	componentDidMount(props, dispatch, pageField, page);
+function componentDidUpdate(props, prevProps, dispatch, pageField, page, firstField, previousField, nextField, lastField, pageAmount) {
+	componentDidMount(props, dispatch, pageField, page, firstField, previousField, nextField, lastField, pageAmount);
 }
 
 function usePrevious(value) {
@@ -42,6 +58,10 @@ function Read(props) {
 	const dispatch = useDispatch();
 
 	const [pageField, setPageField] = useState(null);
+	const [firstField, setFirstField] = useState(null);
+	const [previousField, setPreviousField] = useState(null);
+	const [nextField, setNextField] = useState(null);
+	const [lastField, setLastField] = useState(null);
 
 	const list = useSelector(state => (((state || {}).reducer || {}).data || {}).list) || [];
 	const pageNumber = useSelector(state => (((state || {}).reducer || {}).data || {}).pageNumber) || 0;
@@ -52,12 +72,12 @@ function Read(props) {
 	useEffect(() => {
 		if (didMountRef.current) {
 			componentDidUpdate(
-				props, prevProps, dispatch, pageField, pageNumber
+				props, prevProps, dispatch, pageField, pageNumber, firstField, previousField, nextField, lastField, pageAmount
 			);
 		} else {
 			didMountRef.current = true;
 			componentDidMount(
-				props, dispatch, pageField, pageNumber
+				props, dispatch, pageField, pageNumber, firstField, previousField, nextField, lastField, pageAmount
 			);
 		}
 	});
@@ -94,10 +114,12 @@ function Read(props) {
 			>Create</button>),
 			buildCell('first', <button
 				onClick={() => alert('TO DO')}
+				ref={ref => { if (ref) { setFirstField(ref); } }}
 				type='submit'
 			>{'|<'}</button>),
 			buildCell('previous', <button
 				onClick={() => alert('TO DO')}
+				ref={ref => { if (ref) { setPreviousField(ref); } }}
 				type='submit'
 			>{'<'}</button>),
 			buildCell('page', <select
@@ -108,10 +130,12 @@ function Read(props) {
 				}</select>),
 			buildCell('next', <button
 				onClick={() => alert('TO DO')}
+				ref={ref => { if (ref) { setNextField(ref); } }}
 				type='submit'
 			>{'>'}</button>),
 			buildCell('last', <button
 				onClick={() => alert('TO DO')}
+				ref={ref => { if (ref) { setLastField(ref); } }}
 				type='submit'
 			>{'>|'}</button>),
 			buildCell('refresh', <button
