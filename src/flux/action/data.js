@@ -20,7 +20,7 @@ export const getPage = () => (dispatch, getState) => {
 			dispatch({
 				type: type.GET_PAGE,
 				data: {
-					count: data.count || 0,
+					count: Number(data.count || 0),
 					entity: entity,
 					list: data.rows || [],
 					pageNumber: pageNumber,

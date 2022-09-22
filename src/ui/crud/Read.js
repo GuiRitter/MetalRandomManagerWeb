@@ -2,11 +2,12 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import * as state from '../../constant/state';
-// import { PAGE_SIZE } from '../../constant/system';
+import { PAGE_SIZE } from '../../constant/system';
 
 import { navigate } from '../../flux/action/index';
 import { getPage } from '../../flux/action/data';
 
+import { getPageAmount } from '../../util/data';
 import { buildCell, buildRow, buildTable } from '../../util/html';
 import { buildArray } from '../../util/system';
 
@@ -22,6 +23,7 @@ function Read(props) {
 	// const pageNumber = useSelector(state => (((state || {}).reducer || {}).data || {}).pageNumber) || 0;
 	// const pageSize = useSelector(state => (((state || {}).reducer || {}).data || {}).pageSize) || PAGE_SIZE;
 	const count = useSelector(state => (((state || {}).reducer || {}).data || {}).count) || 0;
+	const pageAmount = getPageAmount(count, PAGE_SIZE);
 
 	log('Read', { count, list });
 
@@ -62,7 +64,7 @@ function Read(props) {
 				type='submit'
 			>{'<'}</button>),
 			buildCell('page', <select>{
-				buildArray(count).map(i => <option>{i + 1}</option>)
+				buildArray(pageAmount).map(i => <option>{i + 1}</option>)
 			}</select>),
 			buildCell('next', <button
 				onClick={() => alert('TO DO')}
