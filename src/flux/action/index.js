@@ -1,7 +1,10 @@
 import * as type from './../type';
 import * as axios from './axios';
 
-import { API_URL } from '../../constant/system';
+import * as state from '../../constant/state';
+import { API_URL, PAGE_SIZE } from '../../constant/system';
+
+import { } from './data';
 
 export const getDone = () => dispatch => {
 	dispatch(axios.get(
@@ -50,6 +53,20 @@ export const setStep = (songName, songId, newStep) => dispatch => {
 		}),
 		null
 	));
+};
+
+export const showArtist = () => dispatch => {
+	dispatch(navigate(state.READ));
+	dispatch({
+		type: type.GET_PAGE,
+		data: {
+			count: 0,
+			entity: 'artist',
+			list: [],
+			pageNumber: 0,
+			pageSize: PAGE_SIZE
+		}
+	});
 };
 
 export const signIn = (login, password) => dispatch => {

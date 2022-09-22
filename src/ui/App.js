@@ -11,6 +11,7 @@ import './App.css';
 
 import Loading from './Loading';
 import Menu from './Menu';
+import Read from './crud/Read';
 import Search from './Search';
 import SignIn from './SignIn';
 import ToDo from './ToDo';
@@ -52,6 +53,7 @@ function App(props) {
 
 	switch (currentState || state.MENU) {
 		case state.MENU: return <Menu />;
+		case state.READ: return <Read />;
 		case state.SEARCH: return <Search />;
 		case state.TO_DO: return <ToDo />;
 		default: return null;

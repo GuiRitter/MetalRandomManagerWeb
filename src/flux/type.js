@@ -6,6 +6,8 @@ export const ENABLE_ABORT_REQUEST = 'ENABLE_ABORT_REQUEST';
 
 export const GET_DONE = 'GET_DONE';
 
+export const GET_PAGE = 'GET_PAGE';
+
 export const GET_TO_DO = 'GET_TO_DO';
 
 export const LOADING = 'LOADING';

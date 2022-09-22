@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import { useDispatch } from 'react-redux';
 
-import { navigate, signOut } from '../flux/action/index';
+import { navigate, showArtist, signOut } from '../flux/action/index';
 import * as state from '../constant/state';
 
 import { buildCell, buildRow, buildTable } from '../util/html';
@@ -24,6 +24,10 @@ function Menu(props) {
 	});
 	
 	return buildTable(
+		buildRow('artist', buildCell('artist', <button
+			onClick={() => dispatch(showArtist())}
+			type='submit'
+		>Artists</button>)),
 		buildRow('search', buildCell('search', <button
 			onClick={() => dispatch(navigate(state.SEARCH))}
 			type='submit'
