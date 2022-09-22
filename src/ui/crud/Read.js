@@ -23,7 +23,7 @@ function Read(props) {
 	// const pageSize = useSelector(state => (((state || {}).reducer || {}).data || {}).pageSize) || PAGE_SIZE;
 	const count = useSelector(state => (((state || {}).reducer || {}).data || {}).count) || 0;
 
-	log('Read', { toDoList: list });
+	log('Read', { count, list });
 
 	return <>{buildTable(
 		[

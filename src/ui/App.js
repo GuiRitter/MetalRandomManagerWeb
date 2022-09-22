@@ -29,6 +29,7 @@ function App(props) {
 	const isAuthenticated = useSelector(state => !!(((state || {}).reducer || {}).token));
 	const isLoading = useSelector(state => ((state || {}).reducer || {}).isLoading);
 	const currentState = useSelector(state => ((state || {}).reducer || {}).state);
+	const entity = useSelector(state => (((state || {}).reducer || {}).data || {}).entity) || null;
 	
 	const dispatch = useDispatch();
 
@@ -53,7 +54,7 @@ function App(props) {
 
 	switch (currentState || state.MENU) {
 		case state.MENU: return <Menu />;
-		case state.READ: return <Read />;
+		case state.READ: return entity ? <Read /> : <Menu />;
 		case state.SEARCH: return <Search />;
 		case state.TO_DO: return <ToDo />;
 		default: return null;
