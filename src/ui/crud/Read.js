@@ -16,7 +16,7 @@ import { getLog } from '../../util/log';
 const log = getLog('crud.Read.');
 
 function componentDidMount(props, dispatch, pageField, page) {
-	if (pageField && (pageField.value !== page)) {
+	if (pageField && (pageField.value !== (page + 1))) {
 		pageField.value = page + 1;
 	}
 }
@@ -101,7 +101,7 @@ function Read(props) {
 				type='submit'
 			>{'<'}</button>),
 			buildCell('page', <select
-				onInput={() => dispatch(setPageNumber(pageField.value))}
+				onInput={() => dispatch(setPageNumber(pageField.value - 1))}
 				ref={ref => { if (ref) { setPageField(ref); } }}
 			>{
 					buildArray(pageAmount).map(i => <option>{i + 1}</option>)

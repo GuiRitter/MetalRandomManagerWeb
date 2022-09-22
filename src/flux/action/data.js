@@ -35,7 +35,6 @@ export const getPage = pageNumber => (dispatch, getState) => {
 export const setPageNumber = pageNumberNew => (dispatch, getState) => {
 	const { pageNumber: pageNumberOld } = getState().reducer.data;
 	log('setPageNumber', { pageNumberOld, pageNumberNew });
-	pageNumberNew--;
 	if (Number(pageNumberOld) === Number(pageNumberNew)) {
 		return;
 	}
