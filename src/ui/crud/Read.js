@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import * as state from '../../constant/state';
 import { PAGE_SIZE } from '../../constant/system';
 
 import { navigate } from '../../flux/action/index';
-import { getPage } from '../../flux/action/data';
+import { getPage, setPageNumber } from '../../flux/action/data';
 
 import { getPageAmount } from '../../util/data';
 import { buildCell, buildRow, buildTable } from '../../util/html';
@@ -15,15 +15,52 @@ import { getLog } from '../../util/log';
 
 const log = getLog('crud.Read.');
 
+function componentDidMount(props, dispatch, pageField, page) {
+	if (pageField && (pageField.value !== page)) {
+		pageField.value = page + 1;
+	}
+}
+
+function componentDidUpdate(props, prevProps, dispatch, pageField, page) {
+	componentDidMount(props, dispatch, pageField, page);
+}
+
+function usePrevious(value) {
+	const ref = useRef();
+	useEffect(() => {
+		ref.current = value;
+	});
+	return ref.current;
+}
+
 function Read(props) {
+
+	const didMountRef = useRef(false);
+
+	const prevProps = usePrevious(props);
 
 	const dispatch = useDispatch();
 
+	const [pageField, setPageField] = useState(null);
+
 	const list = useSelector(state => (((state || {}).reducer || {}).data || {}).list) || [];
-	// const pageNumber = useSelector(state => (((state || {}).reducer || {}).data || {}).pageNumber) || 0;
+	const pageNumber = useSelector(state => (((state || {}).reducer || {}).data || {}).pageNumber) || 0;
 	// const pageSize = useSelector(state => (((state || {}).reducer || {}).data || {}).pageSize) || PAGE_SIZE;
 	const count = useSelector(state => (((state || {}).reducer || {}).data || {}).count) || 0;
 	const pageAmount = getPageAmount(count, PAGE_SIZE);
+
+	useEffect(() => {
+		if (didMountRef.current) {
+			componentDidUpdate(
+				props, prevProps, dispatch, pageField, pageNumber
+			);
+		} else {
+			didMountRef.current = true;
+			componentDidMount(
+				props, dispatch, pageField, pageNumber
+			);
+		}
+	});
 
 	log('Read', { count, list });
 
@@ -63,9 +100,12 @@ function Read(props) {
 				onClick={() => alert('TO DO')}
 				type='submit'
 			>{'<'}</button>),
-			buildCell('page', <select>{
-				buildArray(pageAmount).map(i => <option>{i + 1}</option>)
-			}</select>),
+			buildCell('page', <select
+				onInput={() => dispatch(setPageNumber(pageField.value))}
+				ref={ref => { if (ref) { setPageField(ref); } }}
+			>{
+					buildArray(pageAmount).map(i => <option>{i + 1}</option>)
+				}</select>),
 			buildCell('next', <button
 				onClick={() => alert('TO DO')}
 				type='submit'
@@ -75,7 +115,7 @@ function Read(props) {
 				type='submit'
 			>{'>|'}</button>),
 			buildCell('refresh', <button
-				onClick={() => dispatch(getPage())}
+				onClick={() => dispatch(getPage(pageNumber))}
 				type='submit'
 			>Refresh</button>)
 		),

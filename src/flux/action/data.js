@@ -8,8 +8,8 @@ import { getLog } from '../../util/log';
 
 const log = getLog('flux.action.data.');
 
-export const getPage = () => (dispatch, getState) => {
-	const { entity, pageNumber, pageSize } = getState().reducer.data;
+export const getPage = pageNumber => (dispatch, getState) => {
+	const { entity, pageSize } = getState().reducer.data;
 	log('getPage', { entity, pageNumber, pageSize });
 	dispatch(axios.get(
 		getUrlWithSearchParams(`${API_URL}/${entity}/page`, { number: pageNumber, size: pageSize }),
@@ -30,4 +30,14 @@ export const getPage = () => (dispatch, getState) => {
 		},
 		null
 	));
+};
+
+export const setPageNumber = pageNumberNew => (dispatch, getState) => {
+	const { pageNumber: pageNumberOld } = getState().reducer.data;
+	log('setPageNumber', { pageNumberOld, pageNumberNew });
+	pageNumberNew--;
+	if (Number(pageNumberOld) === Number(pageNumberNew)) {
+		return;
+	}
+	dispatch(getPage(pageNumberNew));
 };
