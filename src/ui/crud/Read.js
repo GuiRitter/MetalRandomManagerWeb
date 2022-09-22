@@ -5,7 +5,7 @@ import * as state from '../../constant/state';
 import { PAGE_SIZE } from '../../constant/system';
 
 import { navigate } from '../../flux/action/index';
-import { getCurrentPage, getFirstPage, setPageNumber } from '../../flux/action/data';
+import { getCurrentPage, getFirstPage, getLastPage, setPageNumber } from '../../flux/action/data';
 
 import { getPageAmount } from '../../util/data';
 import { buildCell, buildRow, buildTable } from '../../util/html';
@@ -108,36 +108,44 @@ function Read(props) {
 	)}{buildTable(
 		buildRow(
 			'pagination',
+
 			buildCell('create', <button
 				onClick={() => alert('TO DO')}
 				type='submit'
 			>Create</button>),
+
 			buildCell('first', <button
 				onClick={() => dispatch(getFirstPage())}
 				ref={ref => { if (ref) { setFirstField(ref); } }}
 				type='submit'
 			>{'|<'}</button>),
+
 			buildCell('previous', <button
 				onClick={() => alert('TO DO')}
 				ref={ref => { if (ref) { setPreviousField(ref); } }}
 				type='submit'
 			>{'<'}</button>),
-			buildCell('page', <select
-				onInput={() => dispatch(setPageNumber(pageField.value - 1))}
-				ref={ref => { if (ref) { setPageField(ref); } }}
-			>{
-					buildArray(pageAmount).map(i => <option>{i + 1}</option>)
-				}</select>),
+
+			buildCell(
+				'page',
+				<select
+					onInput={() => dispatch(setPageNumber(pageField.value - 1))}
+					ref={ref => { if (ref) { setPageField(ref); } }}
+				>{buildArray(pageAmount).map(i => <option>{i + 1}</option>)}</select>
+			),
+
 			buildCell('next', <button
 				onClick={() => alert('TO DO')}
 				ref={ref => { if (ref) { setNextField(ref); } }}
 				type='submit'
 			>{'>'}</button>),
+
 			buildCell('last', <button
-				onClick={() => alert('TO DO')}
+			onClick={() => dispatch(getLastPage())}
 				ref={ref => { if (ref) { setLastField(ref); } }}
 				type='submit'
 			>{'>|'}</button>),
+
 			buildCell('refresh', <button
 				onClick={() => dispatch(getCurrentPage())}
 				type='submit'

@@ -3,6 +3,7 @@ import * as axios from './axios';
 
 import { API_URL, PAGE_SIZE } from '../../constant/system';
 
+import { getPageAmount } from '../../util/data';
 import { getUrlWithSearchParams } from '../../util/http';
 import { getLog } from '../../util/log';
 
@@ -16,6 +17,13 @@ export const getCurrentPage = () => (dispatch, getState) => {
 export const getFirstPage = () => (dispatch, getState) => {
 	log('getFirstPage');
 	dispatch(getPage(0));
+};
+
+export const getLastPage = () => (dispatch, getState) => {
+	const { count } = getState().reducer.data;
+	const pageAmount = getPageAmount(count, PAGE_SIZE);
+	log('getLastPage', { count, pageAmount });
+	dispatch(getPage(pageAmount - 1));
 };
 
 export const getPage = pageNumber => (dispatch, getState) => {
