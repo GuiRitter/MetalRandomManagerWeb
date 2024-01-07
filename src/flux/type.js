@@ -8,6 +8,8 @@ export const GET_DONE = 'GET_DONE';
 
 export const GET_PAGE = 'GET_PAGE';
 
+export const GET_PENDING_RELEASE_DATE_ALBUM = 'GET_PENDING_RELEASE_DATE_ALBUM';
+
 export const GET_TO_DO = 'GET_TO_DO';
 
 export const LOADING = 'LOADING';
@@ -17,3 +19,5 @@ export const NAVIGATION = 'NAVIGATION';
 export const POP_TO_DO = 'POP_TO_DO';
 
 export const RESTORE_FROM_LOCAL_STORAGE = 'RESTORE_FROM_LOCAL_STORAGE';
+
+export const SET_ACTION_DATA = 'SET_ACTION_DATA';

@@ -18,6 +18,28 @@ export const getDone = () => dispatch => {
 	));
 };
 
+export const getPendingReleaseDateAlbum = () => dispatch => {
+	dispatch(axios.get(
+		`${API_URL}/release_date/`,
+		null,
+		value => {
+			if (value && value.data) {
+				dispatch({
+					type: type.GET_PENDING_RELEASE_DATE_ALBUM,
+					data: value.data.length < 1 ? null : {
+						id: value.data[0].id,
+						artist: value.data[0].artist,
+						album: value.data[0].album,
+						releaseDate: value.data[0].release_date,
+						releaseYear: value.data[0].release_year,
+					}
+				});
+			}
+		},
+		null
+	))
+};
+
 export const getToDo = () => dispatch => {
 	dispatch(axios.get(
 		`${API_URL}/to_do/list`,
@@ -38,6 +60,32 @@ export const navigate = nextState => ({
 export const restoreFromLocalStorage = () => ({
 	type: type.RESTORE_FROM_LOCAL_STORAGE
 });
+
+export const setReleaseDate = () => (dispatch, getState) => {
+	const album = getState().reducer.data;
+	dispatch(axios.post(
+		`${API_URL}/release_date/`,
+		{
+			albumId: album.id,
+			releaseDate: album.releaseDate,
+			releaseYear: album.releaseYear
+		},
+		null,
+		_ => dispatch(getPendingReleaseDateAlbum()),
+		null
+	));
+};
+
+export const setActionData = (dataName, dataValue) => (dispatch, getState) => {
+	if (dataValue === getState().reducer[dataName]) {
+		return;
+	}
+	dispatch({
+		type: type.SET_ACTION_DATA,
+		dataName,
+		dataValue
+	});
+};
 
 export const setStep = (songName, songId, newStep) => dispatch => {
 	if (!window.confirm(`Confirm set song\n${songName}\nstep to\n${newStep.description}?`)) {

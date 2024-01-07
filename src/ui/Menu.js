@@ -28,6 +28,10 @@ function Menu(props) {
 			onClick={() => dispatch(showArtist())}
 			type='submit'
 		>Artists</button>)),
+		buildRow('release_date', buildCell('release_date', <button
+			onClick={() => dispatch(navigate(state.RELEASE_DATE))}
+			type='submit'
+		>Release dates</button>)),
 		buildRow('search', buildCell('search', <button
 			onClick={() => dispatch(navigate(state.SEARCH))}
 			type='submit'

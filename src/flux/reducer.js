@@ -50,6 +50,7 @@ const reducer = (currentState = initialState, action) => { // TODO https://redux
 
 		case type.GET_DONE:
 		case type.GET_PAGE:
+		case type.GET_PENDING_RELEASE_DATE_ALBUM:
 		case type.GET_TO_DO:
 			return updateLocalStorage({
 				...nextState,
@@ -77,6 +78,14 @@ const reducer = (currentState = initialState, action) => { // TODO https://redux
 
 		case type.RESTORE_FROM_LOCAL_STORAGE:
 			return JSON.parse(localStorage.getItem(LOCAL_STORAGE_NAME)) || initialState;
+
+		case type.SET_ACTION_DATA:
+			return updateLocalStorage({
+				...nextState,
+				data: Object.assign({}, nextState.data, {
+					[action.dataName]: action.dataValue
+				})
+			});
 
 		default: return nextState;
 	}
