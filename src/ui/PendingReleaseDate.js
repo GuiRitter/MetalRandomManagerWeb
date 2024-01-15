@@ -44,13 +44,23 @@ function PendingReleaseDate(props) {
 			type='submit'
 		>Refresh</button>, { colSpan: 2 })),
 		buildRow(
+			'artistIdRow',
+			buildCell('artistIdLabel', 'Artist Id'),
+			buildCell('artistIdField', pendingReleaseDateAlbum.artistId || '')
+		),
+		buildRow(
 			'artistRow',
-			buildCell('artistLabel', 'Artist'),
+			buildCell('artistLabel', 'Artist Name'),
 			buildCell('artistField', pendingReleaseDateAlbum.artist || '')
 		),
 		buildRow(
+			'albumIdRow',
+			buildCell('albumIdLabel', 'Album Id'),
+			buildCell('albumIdField', pendingReleaseDateAlbum.albumId || '')
+		),
+		buildRow(
 			'albumRow',
-			buildCell('albumLabel', 'Album'),
+			buildCell('albumLabel', 'Album name'),
 			buildCell('albumField', pendingReleaseDateAlbum.album || '')
 		),
 		buildRow(

@@ -28,7 +28,9 @@ export const getPendingReleaseDateAlbum = () => dispatch => {
 					type: type.GET_PENDING_RELEASE_DATE_ALBUM,
 					data: value.data.length < 1 ? null : {
 						id: value.data[0].id,
+						artistId: value.data[0].artist_id,
 						artist: value.data[0].artist,
+						albumId: value.data[0].album_id,
 						album: value.data[0].album,
 						releaseDate: value.data[0].release_date,
 						releaseYear: value.data[0].release_year,
