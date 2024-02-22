@@ -16,6 +16,7 @@ import PendingReleaseDate from './PendingReleaseDate';
 import Search from './Search';
 import SignIn from './SignIn';
 import ToDo from './ToDo';
+import PendingTrackNumber from './PendingTrackNumber';
 
 const log = getLog('App.');
 
@@ -59,6 +60,7 @@ function App(props) {
 		case state.RELEASE_DATE: return <PendingReleaseDate />;
 		case state.SEARCH: return <Search />;
 		case state.TO_DO: return <ToDo />;
+		case state.TRACK_NUMBER: return <PendingTrackNumber />;
 		default: return null;
 	}
 }

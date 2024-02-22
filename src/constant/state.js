@@ -7,3 +7,5 @@ export const READ = 'READ';
 export const RELEASE_DATE = 'RELEASE_DATE';
 
 export const TO_DO = 'TO_DO';
+
+export const TRACK_NUMBER = 'TRACK_NUMBER';

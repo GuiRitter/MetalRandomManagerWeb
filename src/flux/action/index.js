@@ -5,6 +5,9 @@ import * as state from '../../constant/state';
 import { API_URL, PAGE_SIZE } from '../../constant/system';
 
 import { } from './data';
+import { getLog } from '../../util/log';
+
+const log = getLog('flux.action.index.');
 
 export const getDone = () => dispatch => {
 	dispatch(axios.get(
@@ -54,6 +57,39 @@ export const getToDo = () => dispatch => {
 	));
 };
 
+export const getPendingTrackNumber = () => dispatch => {
+	dispatch(axios.get(
+		`${API_URL}/track_number/`,
+		null,
+		value => {
+			if (value && value.data) {
+				dispatch({
+					type: type.GET_PENDING_TRACK_NUMBER,
+					data: {
+						count: value.data.count,
+						artist: {
+							id: value.data.header.artist_id,
+							name: value.data.header.artist_name
+						},
+						album: {
+							id: value.data.header.album_id,
+							name: value.data.header.album_name,
+							releaseDate: value.data.header.release_date,
+						},
+						songList: value.data.songList.map(row => ({
+							id: row.song_id,
+							name: row.song_name,
+							trackSide: row.song_track_side,
+							trackNumber: row.song_track_number
+						}))
+					},
+				});
+			}
+		},
+		null
+	))
+};
+
 export const navigate = nextState => ({
 	type: type.NAVIGATION,
 	state: nextState
@@ -62,6 +98,18 @@ export const navigate = nextState => ({
 export const restoreFromLocalStorage = () => ({
 	type: type.RESTORE_FROM_LOCAL_STORAGE
 });
+
+export const setActionData = (dataName, dataValue) => (dispatch, getState) => {
+	log('setActionData', { dataName, dataValue });
+	if (dataValue === getState().reducer[dataName]) {
+		return;
+	}
+	dispatch({
+		type: type.SET_ACTION_DATA,
+		dataName,
+		dataValue
+	});
+};
 
 export const setReleaseDate = () => (dispatch, getState) => {
 	const album = getState().reducer.data;
@@ -78,15 +126,19 @@ export const setReleaseDate = () => (dispatch, getState) => {
 	));
 };
 
-export const setActionData = (dataName, dataValue) => (dispatch, getState) => {
-	if (dataValue === getState().reducer[dataName]) {
-		return;
-	}
-	dispatch({
-		type: type.SET_ACTION_DATA,
-		dataName,
-		dataValue
-	});
+export const setTrackNumberDate = () => (dispatch, getState) => {
+	const songList = getState().reducer.data.songList.map(song => ({
+		id: song.id,
+		trackSide: song.trackSide,
+		trackNumber: song.trackNumber
+	}));
+	dispatch(axios.post(
+		`${API_URL}/track_number/`,
+		{ songList },
+		null,
+		_ => dispatch(getPendingTrackNumber()),
+		null
+	));
 };
 
 export const setStep = (songName, songId, newStep) => dispatch => {

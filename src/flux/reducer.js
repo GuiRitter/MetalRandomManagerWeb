@@ -51,6 +51,7 @@ const reducer = (currentState = initialState, action) => { // TODO https://redux
 		case type.GET_DONE:
 		case type.GET_PAGE:
 		case type.GET_PENDING_RELEASE_DATE_ALBUM:
+		case type.GET_PENDING_TRACK_NUMBER:
 		case type.GET_TO_DO:
 			return updateLocalStorage({
 				...nextState,

@@ -32,6 +32,10 @@ function Menu(props) {
 			onClick={() => dispatch(navigate(state.RELEASE_DATE))}
 			type='submit'
 		>Release dates</button>)),
+		buildRow('track_number', buildCell('track_number', <button
+			onClick={() => dispatch(navigate(state.TRACK_NUMBER))}
+			type='submit'
+		>Track numbers</button>)),
 		buildRow('search', buildCell('search', <button
 			onClick={() => dispatch(navigate(state.SEARCH))}
 			type='submit'
