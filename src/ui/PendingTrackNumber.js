@@ -68,7 +68,7 @@ function PendingReleaseDate(props) {
 			// TODO move songList update code to the reducer
 			buildCell('songTrackSide', <input
 				onInput={(event) => dispatch(setActionData('songList', songList.map(song2 =>
-					((song.id || '') != (song2.id || ''))
+					((song.id || '') !== (song2.id || ''))
 						? song2
 						: ({
 							...song2,
@@ -79,7 +79,7 @@ function PendingReleaseDate(props) {
 			/>),
 			buildCell('songTrackNumber', <input
 				onInput={(event) => dispatch(setActionData('songList', songList.map(song2 =>
-					((song.id || '') != (song2.id || ''))
+					((song.id || '') !== (song2.id || ''))
 						? song2
 						: ({
 							...song2,
