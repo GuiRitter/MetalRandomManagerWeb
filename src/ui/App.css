@@ -8,3 +8,11 @@ input, button {
   border-color: #898989;
   color: #ffffff
 }
+
+.song-track-side-input {
+  width: 3em;
+}
+
+.song-track-number-input {
+  width: 5em;
+}
