@@ -20,6 +20,14 @@ function PendingReleaseDate(props) {
 
 	const songList = data.songList || [];
 
+	const artistSearchString = encodeURIComponent(header.artist.name || '');
+	const albumSearchString = encodeURIComponent(header.album.name || '');
+	const bothSearchString = encodeURIComponent(`${header.artist.name || ''} ${header.album.name || ''}`);
+	
+	const artistGoogleSearchString = encodeURIComponent(`"${header.artist.name || ''}"`);
+	const albumGoogleSearchString = encodeURIComponent(`"${header.album.name || ''}"`);
+	const bothGoogleSearchString = encodeURIComponent(`"${header.artist.name || ''}" "${header.album.name || ''}"`);
+
 	return <>{buildTable(
 		buildRow('refresh', buildCell('refresh', <button
 			onClick={() => dispatch(getPendingTrackNumber())}
@@ -38,7 +46,7 @@ function PendingReleaseDate(props) {
 		buildRow(
 			'artistNameRow',
 			buildCell('artistNameLabel', 'Artist Name'),
-			buildCell('artistNameField', header.artist.name || '')
+			buildCell('artistNameField', <input value={header.artist.name || ''} readOnly />)
 		),
 		buildRow(
 			'albumIdRow',
@@ -48,14 +56,57 @@ function PendingReleaseDate(props) {
 		buildRow(
 			'albumNameRow',
 			buildCell('albumNameLabel', 'Album name'),
-			buildCell('albumNameField', header.album.name || '')
+			buildCell('albumNameField', <input value={header.album.name || ''} readOnly />)
 		),
 		buildRow(
 			'albumDateRow',
 			buildCell('albumDateLabel', 'Album release date'),
 			buildCell('albumDateField', header.album.releaseDate || '')
 		)
-	)}{buildTable(
+	)}<br/>{buildTable(
+		buildRow('searchHeader',
+			buildCell('name', 'Search'),
+			buildCell('artist', 'Artist'),
+			buildCell('album', 'Album'),
+			buildCell('both', 'Both'),
+		),
+		buildRow('metalArchives',
+			buildCell('name', 'Metal Archives'),
+			buildCell('artist', <a
+				href={`https://www.metal-archives.com/search?searchString=${artistSearchString}&type=band_name`}
+			>Search</a>),
+			buildCell('album', <a
+				href={`https://www.metal-archives.com/search?searchString=${albumSearchString}&type=album_title`}
+			>Search</a>),
+			buildCell('both', <a
+				href={`https://www.metal-archives.com/search/advanced/searching/albums?bandName=${artistSearchString}&releaseTitle=${albumSearchString}&genre=#albums`}
+			>Search</a>),
+		),
+		buildRow('wikipedia',
+			buildCell('name', 'Wikipedia'),
+			buildCell('artist', <a
+				href={`https://en.wikipedia.org/w/index.php?search=${artistSearchString}`}
+			>Search</a>),
+			buildCell('album', <a
+				href={`https://en.wikipedia.org/w/index.php?search=${albumSearchString}`}
+			>Search</a>),
+			buildCell('both', <a
+				href={`https://en.wikipedia.org/w/index.php?search=${bothSearchString}`}
+			>Search</a>),
+		),
+		buildRow('google',
+			buildCell('name', 'Google EN'),
+			buildCell('artist', <a
+				href={`https://www.google.com/search?q=${artistGoogleSearchString}&lr=lang_en&hl=en&tbs=lr%3Alang_1en&oq=${artistGoogleSearchString}`}
+			>Search</a>),
+			buildCell('album', <a
+				href={`https://www.google.com/search?q=${albumGoogleSearchString}&lr=lang_en&hl=en&tbs=lr%3Alang_1en&oq=${albumGoogleSearchString}`}
+			>Search</a>),
+			buildCell('both', <a
+				href={`https://www.google.com/search?q=${bothGoogleSearchString}&lr=lang_en&hl=en&tbs=lr%3Alang_1en&oq=${bothGoogleSearchString}`}
+			>Search</a>),
+		),
+	)}<br/>{buildTable(
 		buildRow('songHeaderRow', 
 			buildCell('songIdHeader', 'Song Id'),
 			buildCell('songNameHeader', 'Song'),

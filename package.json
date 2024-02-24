@@ -1,6 +1,6 @@
 {
   "name": "metal_random_manager",
-  "version": "1.4.2",
+  "version": "1.5.0",
   "private": true,
   "homepage": "metal_random_manager/",
   "dependencies": {
