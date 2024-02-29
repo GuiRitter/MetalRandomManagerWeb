@@ -80,7 +80,8 @@ export const getPendingTrackNumber = () => dispatch => {
 							id: row.song_id,
 							name: row.song_name,
 							trackSide: row.song_track_side,
-							trackNumber: row.song_track_number
+							trackNumber: row.song_track_number,
+							trackIndex: row.song_track_index
 						}))
 					},
 				});
@@ -126,11 +127,12 @@ export const setReleaseDate = () => (dispatch, getState) => {
 	));
 };
 
-export const setTrackNumberDate = () => (dispatch, getState) => {
+export const setTrackNumber = () => (dispatch, getState) => {
 	const songList = getState().reducer.data.songList.map(song => ({
 		id: song.id,
 		trackSide: song.trackSide,
-		trackNumber: song.trackNumber
+		trackNumber: song.trackNumber,
+		trackIndex: song.trackIndex
 	}));
 	dispatch(axios.post(
 		`${API_URL}/track_number/`,

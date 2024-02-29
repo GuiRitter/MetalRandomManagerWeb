@@ -1,7 +1,7 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { getPendingTrackNumber, navigate, setActionData, setTrackNumberDate } from '../flux/action/index';
+import { getPendingTrackNumber, navigate, setActionData, setTrackNumber } from '../flux/action/index';
 import * as state from '../constant/state';
 
 import { buildCell, buildRow, buildTable } from '../util/html';
@@ -110,8 +110,9 @@ function PendingReleaseDate(props) {
 		buildRow('songHeaderRow', 
 			buildCell('songIdHeader', 'Song Id'),
 			buildCell('songNameHeader', 'Song'),
-			buildCell('songTrackSideHeader', 'Side'),
-			buildCell('songTrackNumberHeader', 'Number'),
+			buildCell('songTrackSideHeader', 'Side', { className: 'vertical-header' }),
+			buildCell('songTrackNumberHeader', 'Number', { className: 'vertical-header' }),
+			buildCell('songTrackIndexHeader', 'Index', { className: 'vertical-header' }),
 		),
 		songList.map((song, index) => buildRow(`song_${index}_row`,
 			buildCell('songId', song.id || ''),
@@ -136,14 +137,27 @@ function PendingReleaseDate(props) {
 						? song2
 						: ({
 							...song2,
-							trackNumber: event.target.value
+							trackNumber: event.target.value,
+							trackIndex: event.target.value
 						})
 				)))}
 				value={song.trackNumber || ''}
 			/>),
+			buildCell('songTrackIndex', <input
+				className='song-track-index-input'
+				onInput={(event) => dispatch(setActionData('songList', songList.map(song2 =>
+					((song.id || '') !== (song2.id || ''))
+						? song2
+						: ({
+							...song2,
+							trackIndex: event.target.value
+						})
+				)))}
+				value={song.trackIndex || ''}
+			/>),
 		)),
 		buildRow('save', buildCell('save', <button
-			onClick={() => dispatch(setTrackNumberDate())}
+			onClick={() => dispatch(setTrackNumber())}
 			type='submit'
 		>Save</button>, { colSpan: 4 })),
 		buildRow('back', buildCell('back', <button

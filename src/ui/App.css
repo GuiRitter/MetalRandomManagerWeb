@@ -1,18 +1,28 @@
 * {
-  background-color: #000000;
-  color: #959595
+	background-color: #000000;
+	color: #959595
 }
 
-input, button {
-  background-color: #101010;
-  border-color: #898989;
-  color: #ffffff
+input,
+button {
+	background-color: #101010;
+	border-color: #898989;
+	color: #ffffff
 }
 
 .song-track-side-input {
-  width: 3em;
+	width: 2em;
 }
 
 .song-track-number-input {
-  width: 5em;
+	width: 2em;
+}
+
+.song-track-index-input {
+	width: 2em;
+}
+
+.vertical-header {
+	writing-mode: vertical-lr;
+	transform: rotate(180deg);
 }
