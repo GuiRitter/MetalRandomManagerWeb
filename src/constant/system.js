@@ -3,5 +3,3 @@ export const API_URL = 'https://guilherme-alan-ritter.net/metal_random_manager/a
 export const LOCAL_STORAGE_NAME = 'MetalRandomManager';
 
 export const PAGE_SIZE = 30;
-
-// export const SPOTIFY_API_URL = 'https://accounts.spotify.com/api/token';

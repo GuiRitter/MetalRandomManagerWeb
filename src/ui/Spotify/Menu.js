@@ -2,7 +2,6 @@ import React, { useEffect, useRef } from 'react';
 import { useDispatch } from 'react-redux';
 
 import { navigate } from '../../flux/action/index';
-import { login } from '../../flux/action/Spotify';
 import * as state from '../../constant/state';
 
 import { buildCell, buildRow, buildTable } from '../../util/html';
@@ -26,10 +25,9 @@ function Menu(props) {
 	
 	return buildTable(
 		buildRow('title', buildCell('title', <h1>Spotify</h1>)),
-		buildRow('login', buildCell('login', <button
-			onClick={() => dispatch(login())}
-			type='submit'
-		>Login</button>)),
+		buildRow('login', buildCell('login', <a
+			href='metal_random_manager/api/Spotify/login'
+		>Login</a>)),
 		buildRow('read playlist list', buildCell('read playlist list', <button
 			// onClick={() => dispatch(navigate(state.SPOTIFY_READ_PLAYLIST_LIST))}
 			type='submit'
