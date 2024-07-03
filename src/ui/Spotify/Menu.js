@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { navigate } from '../../flux/action/index';
 import * as state from '../../constant/state';
@@ -12,6 +12,9 @@ function componentDidMount(props) {
 function Menu(props) {
 
 	const didMountRef = useRef(false);
+
+	const token = useSelector(state => (((state || {}).reducer || {}).token));
+
 	const dispatch = useDispatch();
 
 	useEffect(() => {
@@ -26,7 +29,7 @@ function Menu(props) {
 	return buildTable(
 		buildRow('title', buildCell('title', <h1>Spotify</h1>)),
 		buildRow('login', buildCell('login', <a
-			href='api/Spotify/login'
+			href={`api/Spotify/login?token=${token}`}
 		>Login</a>)),
 		buildRow('read playlist list', buildCell('read playlist list', <button
 			// onClick={() => dispatch(navigate(state.SPOTIFY_READ_PLAYLIST_LIST))}
