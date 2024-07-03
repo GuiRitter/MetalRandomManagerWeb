@@ -24,6 +24,7 @@ function Menu(props) {
 	});
 	
 	return buildTable(
+		buildRow('title', buildCell('title', <h1>Metal Random Manager</h1>)),
 		buildRow('artist', buildCell('artist', <button
 			onClick={() => dispatch(showArtist())}
 			type='submit'
@@ -44,6 +45,10 @@ function Menu(props) {
 			onClick={() => dispatch(navigate(state.TO_DO))}
 			type='submit'
 		>To do</button>)),
+		buildRow('Spotify', buildCell('Spotify', <button
+			onClick={() => dispatch(navigate(state.SPOTIFY_MENU))}
+			type='submit'
+		>Spotify</button>)),
 		buildRow('sign out', buildCell('button', <button
 			onClick={() => dispatch(signOut())}
 			type='submit'
