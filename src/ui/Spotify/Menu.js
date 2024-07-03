@@ -26,7 +26,7 @@ function Menu(props) {
 	return buildTable(
 		buildRow('title', buildCell('title', <h1>Spotify</h1>)),
 		buildRow('login', buildCell('login', <a
-			href='metal_random_manager/api/Spotify/login'
+			href='api/Spotify/login'
 		>Login</a>)),
 		buildRow('read playlist list', buildCell('read playlist list', <button
 			// onClick={() => dispatch(navigate(state.SPOTIFY_READ_PLAYLIST_LIST))}
