@@ -26,3 +26,15 @@ button {
 	writing-mode: vertical-lr;
 	transform: rotate(180deg);
 }
+
+table {
+	border-collapse: collapse;
+}
+
+.table-cell {
+	border: 1px solid;
+}
+
+.bold {
+	font-weight: bold;
+}

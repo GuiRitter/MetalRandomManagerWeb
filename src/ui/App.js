@@ -15,6 +15,7 @@ import Read from './crud/Read';
 import PendingReleaseDate from './PendingReleaseDate';
 import Search from './Search';
 import SignIn from './SignIn';
+import SpotifyIdMatcher from './Spotify/IdMatcher';
 import SpotifyMenu from './Spotify/Menu';
 import ToDo from './ToDo';
 import PendingTrackNumber from './PendingTrackNumber';
@@ -60,6 +61,7 @@ function App(props) {
 		case state.READ: return entity ? <Read /> : <Menu />;
 		case state.RELEASE_DATE: return <PendingReleaseDate />;
 		case state.SEARCH: return <Search />;
+		case state.SPOTIFY_ID_MATCHER: return <SpotifyIdMatcher />;
 		case state.SPOTIFY_MENU: return <SpotifyMenu />;
 		case state.TO_DO: return <ToDo />;
 		case state.TRACK_NUMBER: return <PendingTrackNumber />;
