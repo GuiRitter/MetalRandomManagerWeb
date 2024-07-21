@@ -5,6 +5,7 @@ import * as axios from './axios';
 import { API_URL } from '../../constant/system';
 
 import { buildPendingSpotifyIdRow } from '../../util/data';
+import { getUrlWithSearchParams } from '../../util/http';
 import { getLog } from '../../util/log';
 
 const fuzzy = require('fuzzy');
@@ -38,10 +39,21 @@ export const getPendingId = () => dispatch => {
 			}
 		},
 		null
-	))
+	));
 };
 
-export const setSpotifyId = () => dispatch => {
-	// TODO
-	alert('not implemented');
+export const setSpotifyId = songId => (dispatch, getState) => {
+	const SpotifyId = ((((((getState || (() => {}))() || {}).reducer || {}).data || {}).spotifyIdRow || {}).SpotifyId || '');
+
+	log('setSpotifyId', { songId, SpotifyId });
+
+	const url = getUrlWithSearchParams(`${API_URL}/Spotify/pending_id`, { songId, SpotifyId });
+
+	dispatch(axios.post(
+		url,
+		null,
+		null,
+		_ => dispatch(getPendingId()),
+		null
+	));
 };

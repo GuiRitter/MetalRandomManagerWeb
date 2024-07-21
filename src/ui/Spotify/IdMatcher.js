@@ -38,7 +38,7 @@ function IdMatcher(props) {
 		buildCell('match string', pendingSong.matchString, { className: 'table-cell' }),
 		buildCell('album', pendingSong.album, { className: 'table-cell' }),
 		buildCell('track', pendingSong.track, { className: 'table-cell' }),
-		buildCell('button', <input onClick={() => dispatch(setSpotifyId())} type='button' value='Match' />),
+		buildCell('button', <input onClick={() => dispatch(setSpotifyId(pendingSong.songId))} type='button' value='Match' />),
 	));
 
 	const colSpan = 4;
