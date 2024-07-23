@@ -1,14 +1,11 @@
 import * as type from './../type';
 import * as axios from './axios';
 
-// import * as state from '../../constant/state';
 import { API_URL } from '../../constant/system';
 
-import { buildPendingSpotifyIdRow } from '../../util/data';
+import { buildPendingSpotifyIdRow, bySimilarity, similarity } from '../../util/data';
 import { getUrlWithSearchParams } from '../../util/http';
 import { getLog } from '../../util/log';
-
-const fuzzy = require('fuzzy');
 
 const log = getLog('flux.action.Spotify.');
 
@@ -21,13 +18,17 @@ export const getPendingId = () => dispatch => {
 			if (value && value.data) {
 				const spotifyIdRow = buildPendingSpotifyIdRow(value.data.spotifyIdRow);
 
-				let songList = value.data.songList.map(buildPendingSpotifyIdRow);
+				let buildPendingSpotifyIdRowWithSimilarity = song => {
+					let row = buildPendingSpotifyIdRow(song);
 
-				const results = fuzzy.filter(spotifyIdRow.matchString, songList, {
-					extract: element => element.matchString,
-				});
+					row.similarity = similarity(spotifyIdRow.matchString, row.matchString);
 
-				songList = results.map(result => result.original);
+					return row;
+				};
+
+				let songList = value.data.songList
+					.map(buildPendingSpotifyIdRowWithSimilarity)
+					.sort(bySimilarity);
 
 				dispatch({
 					type: type.GET_PENDING_SPOTIFY_ID,
@@ -42,8 +43,16 @@ export const getPendingId = () => dispatch => {
 	));
 };
 
-export const setSpotifyId = songId => (dispatch, getState) => {
-	const SpotifyId = ((((((getState || (() => {}))() || {}).reducer || {}).data || {}).spotifyIdRow || {}).SpotifyId || '');
+export const setSpotifyId = (songId, songMatchString) => (dispatch, getState) => {
+	const SpotifyRow = ((((getState || (() => {}))() || {}).reducer || {}).data || {}).spotifyIdRow || {};
+
+	const confirmResult = window.confirm(`Confirm match ${SpotifyRow.matchString} to ${songMatchString}`);
+
+	if (!confirmResult) {
+		return;
+	}
+
+	const SpotifyId = SpotifyRow.SpotifyId || '';
 
 	log('setSpotifyId', { songId, SpotifyId });
 

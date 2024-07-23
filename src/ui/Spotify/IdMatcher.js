@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import * as state from '../../constant/state';
 
-import { navigate/* , setActionData */ } from '../../flux/action/index';
+import { navigate } from '../../flux/action/index';
 import { getPendingId, setSpotifyId } from '../../flux/action/Spotify';
 
 import { buildCell, buildRow, buildTable } from '../../util/html';
@@ -15,7 +15,6 @@ function componentDidUpdate(props, prevProps) {
 	componentDidMount(props);
 }
 
-// TODO copying from PendingReleaseDate
 function IdMatcher(props) {
 
 	const didMountRef = useRef(false);
@@ -38,7 +37,7 @@ function IdMatcher(props) {
 		buildCell('match string', pendingSong.matchString, { className: 'table-cell' }),
 		buildCell('album', pendingSong.album, { className: 'table-cell' }),
 		buildCell('track', pendingSong.track, { className: 'table-cell' }),
-		buildCell('button', <input onClick={() => dispatch(setSpotifyId(pendingSong.songId))} type='button' value='Match' />),
+		buildCell('button', <input onClick={() => dispatch(setSpotifyId(pendingSong.songId, pendingSong.matchString))} type='button' value='Match' />),
 	));
 
 	const colSpan = 4;
