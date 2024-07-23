@@ -46,7 +46,7 @@ export const getPendingId = () => dispatch => {
 export const setSpotifyId = (songId, songMatchString) => (dispatch, getState) => {
 	const SpotifyRow = ((((getState || (() => {}))() || {}).reducer || {}).data || {}).spotifyIdRow || {};
 
-	const confirmResult = window.confirm(`Confirm match ${SpotifyRow.matchString} to ${songMatchString}`);
+	const confirmResult = window.confirm(`Confirm match\n${SpotifyRow.matchString} to\n${songMatchString}`);
 
 	if (!confirmResult) {
 		return;
