@@ -31,6 +31,10 @@ function Menu(props) {
 		buildRow('login', buildCell('login', <a
 			href={`api/Spotify/login?token=${token}`}
 		>Login</a>)),
+		buildRow('id matcher', buildCell('id matcher', <button
+			onClick={() => dispatch(navigate(state.SPOTIFY_ID_MATCHER))}
+			type='submit'
+		>Id Matcher</button>)),
 		buildRow('read playlist list', buildCell('read playlist list', <button
 			// onClick={() => dispatch(navigate(state.SPOTIFY_READ_PLAYLIST_LIST))}
 			type='submit'

@@ -4,7 +4,6 @@ import * as axios from './axios';
 import * as state from '../../constant/state';
 import { API_URL, PAGE_SIZE } from '../../constant/system';
 
-import { } from './data';
 import { getLog } from '../../util/log';
 
 const log = getLog('flux.action.index.');
