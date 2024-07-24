@@ -1,4 +1,8 @@
 export const buildPendingSpotifyIdRow = row => {
+	if (!row) {
+		return row;
+	}
+
 	const pendingSpotiyIdRow = {
 		matchString: row.match_string,
 		album: row.album,

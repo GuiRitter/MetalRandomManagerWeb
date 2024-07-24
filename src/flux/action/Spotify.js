@@ -18,6 +18,13 @@ export const getPendingId = () => dispatch => {
 			if (value && value.data) {
 				const spotifyIdRow = buildPendingSpotifyIdRow(value.data.spotifyIdRow);
 
+				if (!spotifyIdRow) {
+					return dispatch({
+						type: type.GET_PENDING_SPOTIFY_ID,
+						data: null
+					});
+				}
+
 				let buildPendingSpotifyIdRowWithSimilarity = song => {
 					let row = buildPendingSpotifyIdRow(song);
 
@@ -32,7 +39,7 @@ export const getPendingId = () => dispatch => {
 
 				dispatch({
 					type: type.GET_PENDING_SPOTIFY_ID,
-					data: value.data.length < 1 ? null : {
+					data: (value.data.length < 1) ? null : {
 						spotifyIdRow: spotifyIdRow,
 						songList: songList,
 					}
