@@ -73,3 +73,21 @@ export const setSpotifyId = (songId, songMatchString) => (dispatch, getState) =>
 		null
 	));
 };
+
+export const populateSpotifyId = () => dispatch => {
+	log('populateSpotifyId');
+
+	const confirmResult = window.confirm('This will add rows in the database. Are you sure?');
+
+	if (!confirmResult) {
+		return;
+	}
+
+	dispatch(axios.post(
+		`${API_URL}/Spotify/populate_pending_id`,
+		null,
+		null,
+		_ => {},
+		null
+	));
+};

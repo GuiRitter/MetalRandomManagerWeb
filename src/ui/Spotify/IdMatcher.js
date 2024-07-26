@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import * as state from '../../constant/state';
 
 import { navigate } from '../../flux/action/index';
-import { getPendingId, setSpotifyId } from '../../flux/action/Spotify';
+import { getPendingId, populateSpotifyId, setSpotifyId } from '../../flux/action/Spotify';
 
 import { buildCell, buildRow, buildTable } from '../../util/html';
 
@@ -45,6 +45,10 @@ function IdMatcher(props) {
 	return buildTable(
 		buildRow('title', buildCell('title', <h1>Spotify</h1>, { colSpan })),
 		buildRow('subtitle', buildCell('title', <h2>Id Matcher</h2>, { colSpan })),
+		buildRow('populate', buildCell('populate', <button
+			onClick={() => dispatch(populateSpotifyId())}
+			type='submit'
+		>Populate</button>, { colSpan })),
 		buildRow('refresh', buildCell('refresh', <button
 			onClick={() => dispatch(getPendingId())}
 			type='submit'
