@@ -1,0 +1,120 @@
+#root {
+	display: grid;
+	height: 100%;
+	width: 100%;
+	grid-template-rows: auto auto auto auto 1fr;
+}
+
+textarea {
+	resize: none;
+}
+
+.select_where_artist {
+	grid-area: /*row-start:*/1 / /*column-start:*/1 / /*row-end:*/2 / /*column-end:*/2;
+	margin: /*top:*/1em /*right:*/1em /*bottom:*/0.5em /*left:*/1em;
+}
+
+.select_where_album {
+	grid-area: /*row-start:*/2 / /*column-start:*/1 / /*row-end:*/3 / /*column-end:*/2;
+	margin: /*top:*/0.5m /*right:*/1em /*bottom:*/0.5em /*left:*/1em;
+}
+
+.select_where_song {
+	grid-area: /*row-start:*/3 / /*column-start:*/1 / /*row-end:*/4 / /*column-end:*/2;
+	margin: /*top:*/0.5em /*right:*/1em /*bottom:*/0.5em /*left:*/1em;
+}
+
+.select_button {
+	grid-area: /*row-start:*/4 / /*column-start:*/1 / /*row-end:*/5 / /*column-end:*/2;
+	margin: /*top:*/0.5em /*right:*/1em /*bottom:*/0.5em /*left:*/1em;
+}
+
+.select_output {
+	grid-area: /*row-start:*/5 / /*column-start:*/1 / /*row-end:*/15 / /*column-end:*/2;
+	margin: /*top:*/0.5em /*right:*/1em /*bottom:*/1em /*left:*/1em;
+}
+
+.insert_artist_name {
+	grid-area: /*row-start:*/1 / /*column-start:*/2 / /*row-end:*/2 / /*column-end:*/3;
+	margin: /*top:*/1em /*right:*/0.5em /*bottom:*/0.5em /*left:*/1em;
+}
+
+.insert_artist_button {
+	grid-area: /*row-start:*/2 / /*column-start:*/2 / /*row-end:*/3 / /*column-end:*/3;
+	margin: /*top:*/0.5em /*right:*/0.5em /*bottom:*/1em /*left:*/1em;
+}
+
+.insert_artist_output {
+	grid-area: /*row-start:*/1 / /*column-start:*/3 / /*row-end:*/3 / /*column-end:*/4;
+	margin: /*top:*/1em /*right:*/1em /*bottom:*/1em /*left:*/0.5em;
+}
+
+.insert_album_artist {
+	grid-area: /*row-start:*/3 / /*column-start:*/2 / /*row-end:*/4 / /*column-end:*/3;
+	margin: /*top:*/1em /*right:*/0.5em /*bottom:*/0.5em /*left:*/1em;
+}
+
+.insert_album_name {
+	grid-area: /*row-start:*/4 / /*column-start:*/2 / /*row-end:*/5 / /*column-end:*/3;
+	margin: /*top:*/0.5em /*right:*/0.5em /*bottom:*/0.5em /*left:*/1em;
+}
+
+.insert_album_date {
+	grid-area: /*row-start:*/5 / /*column-start:*/2 / /*row-end:*/6 / /*column-end:*/3;
+	margin: /*top:*/0.5em /*right:*/0.5em /*bottom:*/0.5em /*left:*/1em;
+}
+
+.insert_album_single {
+	grid-area: /*row-start:*/6 / /*column-start:*/2 / /*row-end:*/7 / /*column-end:*/3;
+	margin: /*top:*/0.5em /*right:*/0.5em /*bottom:*/0.5em /*left:*/1em;
+}
+
+.insert_album_button {
+	grid-area: /*row-start:*/7 / /*column-start:*/2 / /*row-end:*/8 / /*column-end:*/3;
+	margin: /*top:*/0.5em /*right:*/0.5em /*bottom:*/1em /*left:*/1em;
+}
+
+.insert_album_output {
+	grid-area: /*row-start:*/3 / /*column-start:*/3 / /*row-end:*/8 / /*column-end:*/4;
+	margin: /*top:*/1em /*right:*/1em /*bottom:*/1em /*left:*/0.5em;
+}
+
+.insert_song_album {
+	grid-area: /*row-start:*/8 / /*column-start:*/2 / /*row-end:*/9 / /*column-end:*/3;
+	margin: /*top:*/1em /*right:*/0.5em /*bottom:*/0.5em /*left:*/1em;
+}
+
+.insert_song_name {
+	grid-area: /*row-start:*/9 / /*column-start:*/2 / /*row-end:*/10 / /*column-end:*/3;
+	margin: /*top:*/0.5em /*right:*/0.5em /*bottom:*/0.5em /*left:*/1em;
+}
+
+.insert_song_date {
+	grid-area: /*row-start:*/10 / /*column-start:*/2 / /*row-end:*/11 / /*column-end:*/3;
+	margin: /*top:*/0.5em /*right:*/0.5em /*bottom:*/0.5em /*left:*/1em;
+}
+
+.insert_song_side {
+	grid-area: /*row-start:*/11 / /*column-start:*/2 / /*row-end:*/12 / /*column-end:*/3;
+	margin: /*top:*/0.5em /*right:*/0.5em /*bottom:*/0.5em /*left:*/1em;
+}
+
+.insert_song_number {
+	grid-area: /*row-start:*/12 / /*column-start:*/2 / /*row-end:*/13 / /*column-end:*/3;
+	margin: /*top:*/0.5em /*right:*/0.5em /*bottom:*/0.5em /*left:*/1em;
+}
+
+.insert_song_index {
+	grid-area: /*row-start:*/13 / /*column-start:*/2 / /*row-end:*/14 / /*column-end:*/3;
+	margin: /*top:*/0.5em /*right:*/0.5em /*bottom:*/0.5em /*left:*/1em;
+}
+
+.insert_song_button {
+	grid-area: /*row-start:*/14 / /*column-start:*/2 / /*row-end:*/15 / /*column-end:*/3;
+	margin: /*top:*/0.5em /*right:*/0.5em /*bottom:*/1em /*left:*/1em;
+}
+
+.insert_song_output {
+	grid-area: /*row-start:*/8 / /*column-start:*/3 / /*row-end:*/15 / /*column-end:*/4;
+	margin: /*top:*/1em /*right:*/1em /*bottom:*/1em /*left:*/0.5em;
+}

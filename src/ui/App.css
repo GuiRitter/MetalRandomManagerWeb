@@ -1,3 +1,10 @@
+#root {
+	display: unset;
+	height: unset;
+	width: unset;
+	grid-template-rows: unset;
+}
+
 * {
 	background-color: #000000;
 	color: #959595
