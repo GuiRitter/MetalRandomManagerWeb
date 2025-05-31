@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import * as state from '../../constant/state';
 import { PAGE_SIZE } from '../../constant/system';
 
-import { navigate, rawSelect } from '../../flux/action/index';
+import { navigate, rawSelect, setActionData } from '../../flux/action/index';
 import { getCurrentPage, getFirstPage, getLastPage, getNextPage, getPreviousPage, setPageNumber } from '../../flux/action/data';
 
 import { getPageAmount } from '../../util/data';
@@ -39,11 +39,23 @@ let insertSongNumberField = null;
 let insertSongIndexField = null;
 let insertSongOutputField = null;
 
-function componentDidMount(props, dispatch) {
+function componentDidMount(props, dispatch, selectWhereArtist, selectWhereAlbum, selectWhereSong, selectOutput) {
+	if (selectWhereArtistField && (selectWhereArtistField.value !== selectWhereArtist)) {
+		selectWhereArtistField.value = selectWhereArtist;
+	}
+	if (selectWhereAlbumField && (selectWhereAlbumField.value !== selectWhereAlbum)) {
+		selectWhereAlbumField.value = selectWhereAlbum;
+	}
+	if (selectWhereSongField && (selectWhereSongField.value !== selectWhereSong)) {
+		selectWhereSongField.value = selectWhereSong;
+	}
+	if (selectOutputField && (selectOutputField.value !== selectOutput)) {
+		selectOutputField.value = JSON.stringify(selectOutput, null, '\t');
+	}
 }
 
-function componentDidUpdate(props, prevProps, dispatch) {
-	componentDidMount(props, dispatch);
+function componentDidUpdate(props, prevProps, dispatch, selectWhereArtist, selectWhereAlbum, selectWhereSong, selectOutput) {
+	componentDidMount(props, dispatch, selectWhereArtist, selectWhereAlbum, selectWhereSong, selectOutput);
 }
 
 function usePrevious(value) {
@@ -62,15 +74,17 @@ function RawCRUD(props) {
 
 	const dispatch = useDispatch();
 
+	const selectData = useSelector(state => ((((state || {}).reducer || {}).data) || {}).select) || {};
+
 	useEffect(() => {
 		if (didMountRef.current) {
 			componentDidUpdate(
-				props, prevProps, dispatch
+				props, prevProps, dispatch, selectData.artist || '', selectData.album || '', selectData.song || '', selectData.output || ''
 			);
 		} else {
 			didMountRef.current = true;
 			componentDidMount(
-				props, dispatch
+				props, dispatch, selectData.artist || '', selectData.album || '', selectData.song || '', selectData.output || ''
 			);
 		}
 	});
@@ -79,24 +93,33 @@ function RawCRUD(props) {
 
 	return <><input
 		className='select_where_artist'
-		// onInput={() => alert('TO DO selectWhereArtistField')}
+		onInput={() => dispatch(setActionData('select', Object.assign({}, selectData, {
+			...selectData,
+			artist: selectWhereArtistField.value
+		})))}
 		placeholder='where artist'
 		ref={ref => { if (ref) { selectWhereArtistField = ref; } }}
 	/><input
 		className='select_where_album'
-		// onInput={() => alert('TO DO selectWhereAlbumField')}
+		onInput={() => dispatch(setActionData('select', Object.assign({}, selectData, {
+			...selectData,
+			album: selectWhereAlbumField.value
+		})))}
 		placeholder='where album'
 		ref={ref => { if (ref) { selectWhereAlbumField = ref; } }}
 	/><input
 		className='select_where_song'
-		// onInput={() => alert('TO DO selectWhereSongField')}
+		onInput={() => dispatch(setActionData('select', Object.assign({}, selectData, {
+			...selectData,
+			song: selectWhereSongField.value
+		})))}
 		placeholder='where song'
 		ref={ref => { if (ref) { selectWhereSongField = ref; } }}
 	/><button
 		className='select_button'
-		onClick={() => dispatch(rawSelect(selectWhereArtistField.value, selectWhereAlbumField.value, selectWhereSongField.value))}
+		onClick={() => dispatch(rawSelect())}
 		type='submit'
-	>Select</button><input
+	>Select</button><textarea
 		className='select_output'
 		// onInput={() => alert('TO DO selectOutputField')}
 		placeholder='select output'

@@ -7,6 +7,9 @@
 
 textarea {
 	resize: none;
+	white-space: pre;
+	overflow-wrap: normal;
+	overflow-x: scroll;
 }
 
 .select_where_artist {

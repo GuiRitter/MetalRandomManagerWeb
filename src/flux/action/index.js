@@ -95,30 +95,31 @@ export const navigate = nextState => ({
 	state: nextState
 });
 
-export const rawSelect = (artist, album, song) => dispatch => {
+export const rawSelect = (artist, album, song) => (dispatch, getState) => {
 	let url = `${API_URL}/raw/`;
 
-	if (artist) { 
-		url += '?artist=' + artist;
+	const reducer = getState().reducer;
+	const selectData = reducer.data.select;
+
+	if (selectData.artist) { 
+		url += '?artist=' + selectData.artist;
 	}
 
-	if (album) { 
-		url += '?album=' + album;
+	if (selectData.album) { 
+		url += '?album=' + selectData.album;
 	}
 
-	if (song) { 
-		url += '?song=' + song;
+	if (selectData.song) { 
+		url += '?song=' + selectData.song;
 	}
 
 	dispatch(axios.get(
 		url,
 		null,
-		value => {
-			debugger;
-			if (value && value.data) {
-				alert(value.data);
-			}
-		},
+		value => dispatch(setActionData('select', Object.assign({}, selectData, {
+			...selectData,
+			output: value.data
+		}))),
 		null
 	));
 };
