@@ -41,7 +41,7 @@ export const getPendingReleaseDateAlbum = () => dispatch => {
 			}
 		},
 		null
-	))
+	));
 };
 
 export const getToDo = () => dispatch => {
@@ -94,6 +94,34 @@ export const navigate = nextState => ({
 	type: type.NAVIGATION,
 	state: nextState
 });
+
+export const rawSelect = (artist, album, song) => dispatch => {
+	let url = `${API_URL}/raw/`;
+
+	if (artist) { 
+		url += '?artist=' + artist;
+	}
+
+	if (album) { 
+		url += '?album=' + album;
+	}
+
+	if (song) { 
+		url += '?song=' + song;
+	}
+
+	dispatch(axios.get(
+		url,
+		null,
+		value => {
+			debugger;
+			if (value && value.data) {
+				alert(value.data);
+			}
+		},
+		null
+	));
+};
 
 export const restoreFromLocalStorage = () => ({
 	type: type.RESTORE_FROM_LOCAL_STORAGE

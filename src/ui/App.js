@@ -19,7 +19,7 @@ import SpotifyIdMatcher from './Spotify/IdMatcher';
 import SpotifyMenu from './Spotify/Menu';
 import ToDo from './ToDo';
 import PendingTrackNumber from './PendingTrackNumber';
-import RawCRUD from './rawCrud/RawCRUD';
+import RawCRUD from './rawCRUD/Page';
 
 const log = getLog('App.');
 
@@ -60,7 +60,7 @@ function App(props) {
 	switch (currentState || state.MENU) {
 		case state.MENU: return <Menu />;
 		case state.READ: return entity ? <Read /> : <Menu />;
-		case state.RAW_CRUD_DATE: return <RawCRUD />;
+		case state.RAW_CRUD: return <RawCRUD />;
 		case state.RELEASE_DATE: return <PendingReleaseDate />;
 		case state.SEARCH: return <Search />;
 		case state.SPOTIFY_ID_MATCHER: return <SpotifyIdMatcher />;

@@ -2,7 +2,7 @@
 	display: grid;
 	height: 100%;
 	width: 100%;
-	grid-template-rows: auto auto auto auto 1fr;
+	grid-template-rows: auto;
 }
 
 textarea {
@@ -16,7 +16,7 @@ textarea {
 
 .select_where_album {
 	grid-area: /*row-start:*/2 / /*column-start:*/1 / /*row-end:*/3 / /*column-end:*/2;
-	margin: /*top:*/0.5m /*right:*/1em /*bottom:*/0.5em /*left:*/1em;
+	margin: /*top:*/0.5em /*right:*/1em /*bottom:*/0.5em /*left:*/1em;
 }
 
 .select_where_song {
@@ -30,8 +30,13 @@ textarea {
 }
 
 .select_output {
-	grid-area: /*row-start:*/5 / /*column-start:*/1 / /*row-end:*/15 / /*column-end:*/2;
+	grid-area: /*row-start:*/5 / /*column-start:*/1 / /*row-end:*/14 / /*column-end:*/2;
 	margin: /*top:*/0.5em /*right:*/1em /*bottom:*/1em /*left:*/1em;
+}
+
+.back {
+	grid-area: /*row-start:*/14 / /*column-start:*/1 / /*row-end:*/15 / /*column-end:*/2;
+	margin: /*top:*/1em /*right:*/1em /*bottom:*/1em /*left:*/1em;
 }
 
 .insert_artist_name {
