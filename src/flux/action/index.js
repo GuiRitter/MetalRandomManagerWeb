@@ -95,7 +95,69 @@ export const navigate = nextState => ({
 	state: nextState
 });
 
-export const rawSelect = (artist, album, song) => (dispatch, getState) => {
+export const rawInsertArtist = () => (dispatch, getState) => {
+	let url = `${API_URL}/raw/artist`;
+
+	const reducer = getState().reducer;
+	const insertData = reducer.data.insertArtist;
+
+	dispatch(axios.post(
+		url,
+		insertData,
+		null,
+		value => dispatch(setActionData('insertArtist', {
+			name: '',
+			output: value.data
+		})),
+		null
+	));
+};
+
+export const rawInsertAlbum = () => (dispatch, getState) => {
+	let url = `${API_URL}/raw/album`;
+
+	const reducer = getState().reducer;
+	const insertData = reducer.data.insertAlbum;
+
+	dispatch(axios.post(
+		url,
+		insertData,
+		null,
+		value => dispatch(setActionData('insertAlbum', {
+			artist: '',
+			name: '',
+			date: '',
+			single: false,
+			output: value.data
+		})),
+		null
+	));
+};
+
+export const rawInsertSong = () => (dispatch, getState) => {
+	let url = `${API_URL}/raw/song`;
+
+	const reducer = getState().reducer;
+	const insertData = reducer.data.insertSong;
+
+	dispatch(axios.post(
+		url,
+		insertData,
+		null,
+		value => dispatch(setActionData('insertSong', {
+			album: '',
+			name: '',
+			date: insertData.date,
+			side: '',
+			number: '',
+			index: '',
+			output: value.data
+		})),
+		null
+	));
+};
+
+export const rawSelect = () => (dispatch, getState) => {
 	let url = `${API_URL}/raw/`;
 
 	const reducer = getState().reducer;

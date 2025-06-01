@@ -7,6 +7,7 @@ import * as state from '../constant/state';
 import { buildCell, buildRow, buildTable } from '../util/html';
 
 function componentDidMount(props) {
+	document.getElementById('root').classList = [];
 }
 
 function Menu(props) {

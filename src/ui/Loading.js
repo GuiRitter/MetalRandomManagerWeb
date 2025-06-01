@@ -7,6 +7,8 @@ import { buildCell, buildRow, buildTable } from '../util/html';
 
 function Loading(props) {
 
+	document.getElementById('root').classList = [];
+
 	const dispatch = useDispatch();
 
 	return buildTable(

@@ -1,4 +1,4 @@
-#root {
+#root.raw_crud {
 	display: grid;
 	height: 100%;
 	width: 100%;
@@ -33,12 +33,12 @@ textarea {
 }
 
 .select_output {
-	grid-area: /*row-start:*/5 / /*column-start:*/1 / /*row-end:*/14 / /*column-end:*/2;
+	grid-area: /*row-start:*/5 / /*column-start:*/1 / /*row-end:*/15 / /*column-end:*/2;
 	margin: /*top:*/0.5em /*right:*/1em /*bottom:*/1em /*left:*/1em;
 }
 
 .back {
-	grid-area: /*row-start:*/14 / /*column-start:*/1 / /*row-end:*/15 / /*column-end:*/2;
+	grid-area: /*row-start:*/15 / /*column-start:*/1 / /*row-end:*/16 / /*column-end:*/2;
 	margin: /*top:*/1em /*right:*/1em /*bottom:*/1em /*left:*/1em;
 }
 
@@ -112,17 +112,22 @@ textarea {
 	margin: /*top:*/0.5em /*right:*/0.5em /*bottom:*/0.5em /*left:*/1em;
 }
 
+.insert_song_rating {
+	grid-area: /*row-start:*/14 / /*column-start:*/2 / /*row-end:*/15 / /*column-end:*/3;
+	margin: /*top:*/0.5em /*right:*/0.5em /*bottom:*/0.5em /*left:*/1em;
+}
+
 .insert_song_index {
 	grid-area: /*row-start:*/13 / /*column-start:*/2 / /*row-end:*/14 / /*column-end:*/3;
 	margin: /*top:*/0.5em /*right:*/0.5em /*bottom:*/0.5em /*left:*/1em;
 }
 
 .insert_song_button {
-	grid-area: /*row-start:*/14 / /*column-start:*/2 / /*row-end:*/15 / /*column-end:*/3;
+	grid-area: /*row-start:*/15 / /*column-start:*/2 / /*row-end:*/16 / /*column-end:*/3;
 	margin: /*top:*/0.5em /*right:*/0.5em /*bottom:*/1em /*left:*/1em;
 }
 
 .insert_song_output {
-	grid-area: /*row-start:*/8 / /*column-start:*/3 / /*row-end:*/15 / /*column-end:*/4;
+	grid-area: /*row-start:*/8 / /*column-start:*/3 / /*row-end:*/16 / /*column-end:*/4;
 	margin: /*top:*/1em /*right:*/1em /*bottom:*/1em /*left:*/0.5em;
 }

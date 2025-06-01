@@ -1,15 +1,9 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import * as state from '../../constant/state';
-import { PAGE_SIZE } from '../../constant/system';
 
-import { navigate, rawSelect, setActionData } from '../../flux/action/index';
-import { getCurrentPage, getFirstPage, getLastPage, getNextPage, getPreviousPage, setPageNumber } from '../../flux/action/data';
-
-import { getPageAmount } from '../../util/data';
-import { buildCell, buildRow, buildTable } from '../../util/html';
-import { buildArray } from '../../util/system';
+import { navigate, rawInsertAlbum, rawInsertArtist, rawInsertSong, rawSelect, setActionData } from '../../flux/action/index';
 
 import { getLog } from '../../util/log';
 
@@ -37,9 +31,12 @@ let insertSongDateField = null;
 let insertSongSideField = null;
 let insertSongNumberField = null;
 let insertSongIndexField = null;
+let insertSongRatingField = null;
 let insertSongOutputField = null;
 
-function componentDidMount(props, dispatch, selectWhereArtist, selectWhereAlbum, selectWhereSong, selectOutput) {
+function componentDidMount(props, dispatch, selectWhereArtist, selectWhereAlbum, selectWhereSong, selectOutput, insertArtistName, insertArtistOutput, insertAlbumArtist, insertAlbumName, insertAlbumDate, insertAlbumSingle, insertAlbumOutput, insertSongAlbum, insertSongName, insertSongDate, insertSongSide, insertSongNumber, insertSongIndex, insertSongRating, insertSongOutput) {
+	document.getElementById('root').classList.add('raw_crud');
+
 	if (selectWhereArtistField && (selectWhereArtistField.value !== selectWhereArtist)) {
 		selectWhereArtistField.value = selectWhereArtist;
 	}
@@ -52,10 +49,55 @@ function componentDidMount(props, dispatch, selectWhereArtist, selectWhereAlbum,
 	if (selectOutputField && (selectOutputField.value !== selectOutput)) {
 		selectOutputField.value = JSON.stringify(selectOutput, null, '\t');
 	}
+	if (insertArtistNameField && (insertArtistNameField.value !== insertArtistName)) {
+		insertArtistNameField.value = insertArtistName;
+	}
+	if (insertArtistOutputField && (insertArtistOutputField.value !== insertArtistOutput)) {
+		insertArtistOutputField.value = JSON.stringify(insertArtistOutput, null, '\t');
+	}
+	if (insertAlbumArtistField && (insertAlbumArtistField.value !== insertAlbumArtist)) {
+		insertAlbumArtistField.value = insertAlbumArtist;
+	}
+	if (insertAlbumNameField && (insertAlbumNameField.value !== insertAlbumName)) {
+		insertAlbumNameField.value = insertAlbumName;
+	}
+	if (insertAlbumDateField && (insertAlbumDateField.value !== insertAlbumDate)) {
+		insertAlbumDateField.value = insertAlbumDate;
+	}
+	if (insertAlbumSingleField && (insertAlbumSingleField.value !== insertAlbumSingle)) {
+		insertAlbumSingleField.value = insertAlbumSingle;
+	}
+	if (insertAlbumOutputField && (insertAlbumOutputField.value !== insertAlbumOutput)) {
+		insertAlbumOutputField.value = JSON.stringify(insertAlbumOutput, null, '\t');;
+	}
+	if (insertSongAlbumField && (insertSongAlbumField.value !== insertSongAlbum)) {
+		insertSongAlbumField.value = insertSongAlbum;
+	}
+	if (insertSongNameField && (insertSongNameField.value !== insertSongName)) {
+		insertSongNameField.value = insertSongName;
+	}
+	if (insertSongDateField && (insertSongDateField.value !== insertSongDate)) {
+		insertSongDateField.value = insertSongDate;
+	}
+	if (insertSongSideField && (insertSongSideField.value !== insertSongSide)) {
+		insertSongSideField.value = insertSongSide;
+	}
+	if (insertSongNumberField && (insertSongNumberField.value !== insertSongNumber)) {
+		insertSongNumberField.value = insertSongNumber;
+	}
+	if (insertSongIndexField && (insertSongIndexField.value !== insertSongIndex)) {
+		insertSongIndexField.value = insertSongIndex;
+	}
+	if (insertSongRatingField && (insertSongRatingField.value !== insertSongRating)) {
+		insertSongRatingField.value = insertSongRating;
+	}
+	if (insertSongOutputField && (insertSongOutputField.value !== insertSongOutput)) {
+		insertSongOutputField.value = JSON.stringify(insertSongOutput, null, '\t');;
+	}
 }
 
-function componentDidUpdate(props, prevProps, dispatch, selectWhereArtist, selectWhereAlbum, selectWhereSong, selectOutput) {
-	componentDidMount(props, dispatch, selectWhereArtist, selectWhereAlbum, selectWhereSong, selectOutput);
+function componentDidUpdate(props, prevProps, dispatch, selectWhereArtist, selectWhereAlbum, selectWhereSong, selectOutput, insertArtistName, insertArtistOutput, insertAlbumArtist, insertAlbumName, insertAlbumDate, insertAlbumSingle, insertAlbumOutput, insertSongAlbum, insertSongName, insertSongDate, insertSongSide, insertSongNumber, insertSongIndex, insertSongRating, insertSongOutput) {
+	componentDidMount(props, dispatch, selectWhereArtist, selectWhereAlbum, selectWhereSong, selectOutput, insertArtistName, insertArtistOutput, insertAlbumArtist, insertAlbumName, insertAlbumDate, insertAlbumSingle, insertAlbumOutput, insertSongAlbum, insertSongName, insertSongDate, insertSongSide, insertSongNumber, insertSongIndex, insertSongRating, insertSongOutput);
 }
 
 function usePrevious(value) {
@@ -75,16 +117,19 @@ function RawCRUD(props) {
 	const dispatch = useDispatch();
 
 	const selectData = useSelector(state => ((((state || {}).reducer || {}).data) || {}).select) || {};
+	const insertArtistData = useSelector(state => ((((state || {}).reducer || {}).data) || {}).insertArtist) || {};
+	const insertAlbumData = useSelector(state => ((((state || {}).reducer || {}).data) || {}).insertAlbum) || {};
+	const insertSongData = useSelector(state => ((((state || {}).reducer || {}).data) || {}).insertSong) || {};
 
 	useEffect(() => {
 		if (didMountRef.current) {
 			componentDidUpdate(
-				props, prevProps, dispatch, selectData.artist || '', selectData.album || '', selectData.song || '', selectData.output || ''
+				props, prevProps, dispatch, selectData.artist || '', selectData.album || '', selectData.song || '', selectData.output || '', insertArtistData.name || '', insertArtistData.output || '', insertAlbumData.artist || '', insertAlbumData.name || '', insertAlbumData.date || '', insertAlbumData.single || false, insertAlbumData.output || '', insertSongData.album || '', insertSongData.name || '', insertSongData.date || '', insertSongData.side || '', insertSongData.number || '', insertSongData.index || '', insertSongData.rating || '', insertSongData.output || ''
 			);
 		} else {
 			didMountRef.current = true;
 			componentDidMount(
-				props, dispatch, selectData.artist || '', selectData.album || '', selectData.song || '', selectData.output || ''
+				props, dispatch, selectData.artist || '', selectData.album || '', selectData.song || '', selectData.output || '', insertArtistData.name || '', insertArtistData.output || '', insertAlbumData.artist || '', insertAlbumData.name || '', insertAlbumData.date || '', insertAlbumData.single || false, insertAlbumData.output || '', insertSongData.album || '', insertSongData.name || '', insertSongData.date || '', insertSongData.side || '', insertSongData.number || '', insertSongData.index || '', insertSongData.rating || '', insertSongData.output || ''
 			);
 		}
 	});
@@ -121,7 +166,6 @@ function RawCRUD(props) {
 		type='submit'
 	>Select</button><textarea
 		className='select_output'
-		// onInput={() => alert('TO DO selectOutputField')}
 		placeholder='select output'
 		ref={ref => { if (ref) { selectOutputField = ref; } }}
 	/><button
@@ -130,84 +174,123 @@ function RawCRUD(props) {
 		type='submit'
 	>Back</button><input
 		className='insert_artist_name'
-		// onInput={() => alert('TO DO insertArtistNameField')}
+		onInput={() => dispatch(setActionData('insertArtist', Object.assign({}, insertArtistData, {
+			...insertArtistData,
+			name: insertArtistNameField.value
+		})))}
 		placeholder='insert artist name'
 		ref={ref => { if (ref) { insertArtistNameField = ref; } }}
 	/><button
 		className='insert_artist_button'
-		onClick={() => dispatch(navigate(state.MENU))}
+		onClick={() => dispatch(rawInsertArtist())}
 		type='submit'
-	>Insert Artist</button><input
+	>Insert Artist</button><textarea
 		className='insert_artist_output'
-		// onInput={() => alert('TO DO insertArtistOutputField')}
 		placeholder='insert artist output'
 		ref={ref => { if (ref) { insertArtistOutputField = ref; } }}
 	/><input
 		className='insert_album_artist'
-		// onInput={() => alert('TO DO insertAlbumArtistField')}
+		onInput={() => dispatch(setActionData('insertAlbum', Object.assign({}, insertAlbumData, {
+			...insertAlbumData,
+			artist: insertAlbumArtistField.value
+		})))}
 		placeholder='insert album artist'
 		ref={ref => { if (ref) { insertAlbumArtistField = ref; } }}
 	/><input
 		className='insert_album_name'
-		// onInput={() => alert('TO DO insertAlbumNameField')}
+		onInput={() => dispatch(setActionData('insertAlbum', Object.assign({}, insertAlbumData, {
+			...insertAlbumData,
+			name: insertAlbumNameField.value
+		})))}
 		placeholder='insert album name'
 		ref={ref => { if (ref) { insertAlbumNameField = ref; } }}
 	/><input
 		className='insert_album_date'
-		// onInput={() => alert('TO DO insertAlbumDateField')}
+		onInput={() => dispatch(setActionData('insertAlbum', Object.assign({}, insertAlbumData, {
+			...insertAlbumData,
+			date: insertAlbumDateField.value
+		})))}
 		placeholder='insert album date'
 		ref={ref => { if (ref) { insertAlbumDateField = ref; } }}
 	/><input
 		className='insert_album_single'
-		// onInput={() => alert('TO DO insertAlbumSingleField')}
+		onInput={() => dispatch(setActionData('insertAlbum', Object.assign({}, insertAlbumData, {
+			...insertAlbumData,
+			single: insertAlbumSingleField.value
+		})))}
 		placeholder='insert album single'
 		ref={ref => { if (ref) { insertAlbumSingleField = ref; } }}
+		type='checkbox'
 	/><button
 		className='insert_album_button'
-		onClick={() => dispatch(navigate(state.MENU))}
+		onClick={() => dispatch(rawInsertAlbum())}
 		type='submit'
-	>Insert Album</button><input
+	>Insert Album</button><textarea
 		className='insert_album_output'
-		// onInput={() => alert('TO DO insertAlbumOutputField')}
 		placeholder='insert album output'
 		ref={ref => { if (ref) { insertAlbumOutputField = ref; } }}
 	/><input
 		className='insert_song_album'
-		// onInput={() => alert('TO DO insertSongAlbumField')}
+		onInput={() => dispatch(setActionData('insertSong', Object.assign({}, insertSongData, {
+			...insertSongData,
+			album: insertSongAlbumField.value
+		})))}
 		placeholder='insert song album'
 		ref={ref => { if (ref) { insertSongAlbumField = ref; } }}
 	/><input
 		className='insert_song_name'
-		// onInput={() => alert('TO DO insertSongNameField')}
+		onInput={() => dispatch(setActionData('insertSong', Object.assign({}, insertSongData, {
+			...insertSongData,
+			name: insertSongNameField.value
+		})))}
 		placeholder='insert song name'
 		ref={ref => { if (ref) { insertSongNameField = ref; } }}
 	/><input
 		className='insert_song_date'
-		// onInput={() => alert('TO DO insertSongDateField')}
+		onInput={() => dispatch(setActionData('insertSong', Object.assign({}, insertSongData, {
+			...insertSongData,
+			date: insertSongDateField.value
+		})))}
 		placeholder='insert song date'
 		ref={ref => { if (ref) { insertSongDateField = ref; } }}
 	/><input
 		className='insert_song_side'
-		// onInput={() => alert('TO DO insertSongSideField')}
+		onInput={() => dispatch(setActionData('insertSong', Object.assign({}, insertSongData, {
+			...insertSongData,
+			side: insertSongSideField.value
+		})))}
 		placeholder='insert song side'
 		ref={ref => { if (ref) { insertSongSideField = ref; } }}
 	/><input
 		className='insert_song_number'
-		// onInput={() => alert('TO DO insertSongNumberField')}
+		onInput={() => dispatch(setActionData('insertSong', Object.assign({}, insertSongData, {
+			...insertSongData,
+			number: insertSongNumberField.value
+		})))}
 		placeholder='insert song number'
 		ref={ref => { if (ref) { insertSongNumberField = ref; } }}
 	/><input
 		className='insert_song_index'
-		// onInput={() => alert('TO DO insertSongIndexField')}
+		onInput={() => dispatch(setActionData('insertSong', Object.assign({}, insertSongData, {
+			...insertSongData,
+			index: insertSongIndexField.value
+		})))}
 		placeholder='insert song index'
 		ref={ref => { if (ref) { insertSongIndexField = ref; } }}
+	/><input
+		className='insert_song_rating'
+		onInput={() => dispatch(setActionData('insertSong', Object.assign({}, insertSongData, {
+			...insertSongData,
+			rating: insertSongRatingField.value
+		})))}
+		placeholder='insert song rating'
+		ref={ref => { if (ref) { insertSongRatingField = ref; } }}
 	/><button
 		className='insert_song_button'
-		onClick={() => dispatch(navigate(state.MENU))}
+		onClick={() => dispatch(rawInsertSong())}
 		type='submit'
-	>Insert Song</button><input
+	>Insert Song</button><textarea
 		className='insert_song_output'
-		// onInput={() => alert('TO DO insertSongOutputField')}
 		placeholder='insert song output'
 		ref={ref => { if (ref) { insertSongOutputField = ref; } }}
 	/></>;
