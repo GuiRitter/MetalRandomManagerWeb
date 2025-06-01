@@ -2,6 +2,8 @@ export const MENU = 'MENU';
 
 export const SEARCH = 'SEARCH';
 
+export const RAW_CRUD = 'RAW_CRUD';
+
 export const READ = 'READ';
 
 export const RELEASE_DATE = 'RELEASE_DATE';

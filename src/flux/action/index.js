@@ -41,7 +41,7 @@ export const getPendingReleaseDateAlbum = () => dispatch => {
 			}
 		},
 		null
-	))
+	));
 };
 
 export const getToDo = () => dispatch => {
@@ -94,6 +94,97 @@ export const navigate = nextState => ({
 	type: type.NAVIGATION,
 	state: nextState
 });
+
+export const rawInsertArtist = () => (dispatch, getState) => {
+	let url = `${API_URL}/raw/artist`;
+
+	const reducer = getState().reducer;
+	const insertData = reducer.data.insertArtist;
+
+	dispatch(axios.post(
+		url,
+		insertData,
+		null,
+		value => dispatch(setActionData('insertArtist', {
+			name: '',
+			output: value.data
+		})),
+		null
+	));
+};
+
+export const rawInsertAlbum = () => (dispatch, getState) => {
+	let url = `${API_URL}/raw/album`;
+
+	const reducer = getState().reducer;
+	const insertData = reducer.data.insertAlbum;
+
+	dispatch(axios.post(
+		url,
+		insertData,
+		null,
+		value => dispatch(setActionData('insertAlbum', {
+			artist: '',
+			name: '',
+			date: '',
+			single: false,
+			output: value.data
+		})),
+		null
+	));
+};
+
+export const rawInsertSong = () => (dispatch, getState) => {
+	let url = `${API_URL}/raw/song`;
+
+	const reducer = getState().reducer;
+	const insertData = reducer.data.insertSong;
+
+	dispatch(axios.post(
+		url,
+		insertData,
+		null,
+		value => dispatch(setActionData('insertSong', {
+			album: '',
+			name: '',
+			date: insertData.date,
+			side: '',
+			number: '',
+			index: '',
+			output: value.data
+		})),
+		null
+	));
+};
+
+export const rawSelect = () => (dispatch, getState) => {
+	let url = `${API_URL}/raw/`;
+
+	const reducer = getState().reducer;
+	const selectData = reducer.data.select;
+
+	if (selectData.artist) { 
+		url += '?artist=' + selectData.artist;
+	}
+
+	if (selectData.album) { 
+		url += '?album=' + selectData.album;
+	}
+
+	if (selectData.song) { 
+		url += '?song=' + selectData.song;
+	}
+
+	dispatch(axios.get(
+		url,
+		null,
+		value => dispatch(setActionData('select', Object.assign({}, selectData, {
+			...selectData,
+			output: value.data
+		}))),
+		null
+	));
+};
 
 export const restoreFromLocalStorage = () => ({
 	type: type.RESTORE_FROM_LOCAL_STORAGE

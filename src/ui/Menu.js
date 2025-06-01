@@ -7,6 +7,7 @@ import * as state from '../constant/state';
 import { buildCell, buildRow, buildTable } from '../util/html';
 
 function componentDidMount(props) {
+	document.getElementById('root').classList = [];
 }
 
 function Menu(props) {
@@ -49,6 +50,10 @@ function Menu(props) {
 			onClick={() => dispatch(navigate(state.SPOTIFY_MENU))}
 			type='submit'
 		>Spotify</button>)),
+		buildRow('raw_crud', buildCell('raw_crud', <button
+			onClick={() => dispatch(navigate(state.RAW_CRUD))}
+			type='submit'
+		>Raw CRUD</button>)),
 		buildRow('sign out', buildCell('button', <button
 			onClick={() => dispatch(signOut())}
 			type='submit'
