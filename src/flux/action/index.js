@@ -163,16 +163,22 @@ export const rawSelect = () => (dispatch, getState) => {
 	const reducer = getState().reducer;
 	const selectData = reducer.data.select;
 
+	let parameterList = [];
+
 	if (selectData.artist) { 
-		url += '?artist=' + selectData.artist;
+		parameterList.push('artist=' + selectData.artist);
 	}
 
 	if (selectData.album) { 
-		url += '?album=' + selectData.album;
+		parameterList.push('album=' + selectData.album);
 	}
 
 	if (selectData.song) { 
-		url += '?song=' + selectData.song;
+		parameterList.push('song=' + selectData.song);
+	}
+
+	if (parameterList.length > 0) {
+		url += '?' + parameterList.join('&');
 	}
 
 	dispatch(axios.get(
